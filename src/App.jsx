@@ -5,9 +5,9 @@ import Footer from "./components/LayoutComponents/Footer";
 function App() {
   return (
     <>
-      <nav>
+      <header className="sticky top-0 z-50">
         <Navbar />
-      </nav>
+      </header>
       <main>
         <Outlet />
       </main>

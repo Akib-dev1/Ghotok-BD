@@ -6,13 +6,13 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
   return (
-    <nav className="bg-white shadow-md z-50 relative">
+    <nav className="backdrop-blur-lg bg-[#E3D4B4] shadow-md z-50 relative">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto px-4 py-3 flex items-center justify-between">
         <div className="text-2xl font-bold text-blue-600">
-          <Link to="/">MyLogo</Link>
+          <Link to="/" className="great-vibes text-[#D33454]">GhotokBD</Link>
         </div>
 
-        <div className="hidden md:flex space-x-6">
+        <div className="hidden md:flex text-xl text-[#1F2937] font-semibold space-x-6">
           <NavLink to="/" end>
             Home
           </NavLink>
@@ -24,7 +24,7 @@ const Navbar = () => {
         <div className="hidden md:block">
           <Link
             to="/login"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+            className="bg-[#D33454] text-white px-4 py-2 rounded-full hover:border-[#D33454] border border-[#D33454] hover:bg-inherit duration-150 hover:text-[#000000] text-lg"
           >
             Login
           </Link>
@@ -61,7 +61,7 @@ const Navbar = () => {
           <Link
             to="/login"
             onClick={() => setIsOpen(false)}
-            className="bg-blue-600 text-white text-center py-2 rounded-md hover:bg-blue-700 transition"
+            className="bg-[#D33454] text-white text-center py-2 rounded-md hover:bg-[#D33454]/80 transition"
           >
             Login
           </Link>

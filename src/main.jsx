@@ -7,6 +7,9 @@ import Home from "./Pages/Home.jsx";
 import Biodatas from "./Pages/Biodatas.jsx";
 import About from "./Pages/About.jsx";
 import Contact from "./Pages/Contact.jsx";
+import Login from "./Pages/Login.jsx";
+import AuthLayout from "./Layouts/AuthLayout.jsx";
+import Signup from "./Pages/Signup.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +34,21 @@ const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path: "/",
+    element: <AuthLayout />,
+    children: [
+      {
+        index: true,
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      }
+    ]
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(
