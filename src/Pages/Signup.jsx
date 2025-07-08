@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,16 +15,32 @@ import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from "@/Contexts/AuthProvidor";
+import toast from "react-hot-toast";
 
 const Signup = () => {
+  const { emailRegister, updateUser, setError, error, authorizeWithGoogle } =
+    use(AuthContext);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
+  const handleGoogleLogin = () => {
+    authorizeWithGoogle()
+      .then((result) => {
+        toast.success("Sign up successful");
+        setError(null);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
   const onSubmit = async (data) => {
-    const {name,email,password}=data;
+    const { name, email, password } = data;
     const imageFile = data.photo[0];
     const imageData = new FormData();
     imageData.append("image", imageFile);
@@ -33,7 +49,21 @@ const Signup = () => {
       imageData
     );
     const imageURL = imgData.data.data.url;
-    console.log("Image URL:", imageURL);
+    emailRegister(email, password)
+      .then((result) => {
+        updateUser({ displayName: name, photoURL: imageURL })
+          .then(() => {
+            toast.success("Sign up successful");
+            setError(null);
+            reset();
+          })
+          .catch((error) => {
+            setError(error.message);
+          });
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
   };
   return (
     <>
@@ -167,6 +197,8 @@ const Signup = () => {
             </p>
           )}
 
+          {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+
           <CardFooter className="flex-col gap-2 mt-4">
             <Button
               type="submit"
@@ -175,10 +207,13 @@ const Signup = () => {
               Sign Up
             </Button>
             <Button
+              onClick={handleGoogleLogin}
+              type="button"
               variant="outline"
               className="w-full text-[#D33454] border-[#D33454] hover:bg-[#E3D4B4] cursor-pointer"
             >
-              <FaGoogle />Sign Up with Google
+              <FaGoogle />
+              Sign Up with Google
             </Button>
           </CardFooter>
         </form>

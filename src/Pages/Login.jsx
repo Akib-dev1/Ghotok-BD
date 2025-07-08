@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,15 +14,37 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from "@/Contexts/AuthProvidor";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const { authorizeWithGoogle, error, setError, emailLogin } = use(AuthContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log("Form submitted:", data);
+    const { email, password } = data;
+    emailLogin(email, password)
+      .then((result) => {
+        toast.success("Login successful");
+        setError(null);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    authorizeWithGoogle()
+      .then((result) => {
+        toast.success("Login successful");
+        setError(null);
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
   };
   return (
     <>
@@ -46,7 +68,6 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent>
             <div className="flex flex-col gap-6">
-              {/* Email */}
               <div className="grid gap-2">
                 <Label htmlFor="email" className="text-[#D33454]">
                   Email
@@ -61,7 +82,6 @@ const Login = () => {
                 />
               </div>
 
-              {/* Password */}
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password" className="text-[#D33454]">
@@ -103,7 +123,13 @@ const Login = () => {
             </div>
           </CardContent>
 
-          {errors.password && <p className="text-red-500 text-center mt-4">{errors.password?.message}</p>}
+          {errors.password && (
+            <p className="text-red-500 text-center mt-4">
+              {errors.password?.message}
+            </p>
+          )}
+
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
 
           <CardFooter className="flex-col gap-2 mt-4">
             <Button
@@ -113,10 +139,13 @@ const Login = () => {
               Login
             </Button>
             <Button
+              onClick={handleGoogleLogin}
+              type="button"
               variant="outline"
               className="w-full text-[#D33454] border-[#D33454] hover:bg-[#E3D4B4] cursor-pointer"
             >
-              <FaGoogle />Login with Google
+              <FaGoogle />
+              Login with Google
             </Button>
           </CardFooter>
         </form>

@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '@/firebase.config';
+import toast from 'react-hot-toast';
 export const AuthContext =createContext();
 const AuthProvidor = ({children}) => {
     const providor = new GoogleAuthProvider();
@@ -20,7 +21,7 @@ const AuthProvidor = ({children}) => {
     }
     const logout =()=>{
         return signOut(auth).then(()=>{
-            
+            toast.success('Logout successful');
         });
     }
     const authorizeWithGoogle=()=>{

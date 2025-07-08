@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { AuthContext } from "@/Contexts/AuthProvidor";
 
 const Navbar = () => {
+  const { user } = use(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
   return (
     <nav className="backdrop-blur-lg bg-[#E3D4B4] shadow-md z-50 relative">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto px-4 py-3 flex items-center justify-between">
         <div className="text-2xl font-bold text-blue-600">
-          <Link to="/" className="great-vibes text-[#D33454]">GhotokBD</Link>
+          <Link to="/" className="great-vibes text-[#D33454]">
+            GhotokBD
+          </Link>
         </div>
 
         <div className="hidden md:flex text-xl text-[#1F2937] font-semibold space-x-6">
@@ -22,12 +26,21 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:block">
-          <Link
-            to="/login"
-            className="bg-[#D33454] text-white px-4 py-2 rounded-full hover:border-[#D33454] border border-[#D33454] hover:bg-inherit duration-150 hover:text-[#000000] text-lg"
-          >
-            Login
-          </Link>
+          {user ? (
+            <Link
+              to="/dashboard"
+              className="bg-[#D33454] text-white px-4 py-2 rounded-full hover:border-[#D33454] border border-[#D33454] hover:bg-inherit duration-150 ease-in hover:text-[#000000] text-lg"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-[#D33454] text-white px-4 py-2 rounded-full hover:border-[#D33454] border border-[#D33454] hover:bg-inherit duration-150 ease-in hover:text-[#000000] text-lg"
+            >
+              Login
+            </Link>
+          )}
         </div>
 
         <div className="md:hidden">
@@ -58,13 +71,19 @@ const Navbar = () => {
           <NavLink to="/contact" onClick={() => setIsOpen(false)}>
             Contact Us
           </NavLink>
-          <Link
+          {user ? (<Link
+            to="/dashboard"
+            onClick={() => setIsOpen(false)}
+            className="bg-[#D33454] text-white text-center py-2 rounded-md hover:bg-[#D33454]/80"
+          >
+            Dashboard
+          </Link>) : (<Link
             to="/login"
             onClick={() => setIsOpen(false)}
-            className="bg-[#D33454] text-white text-center py-2 rounded-md hover:bg-[#D33454]/80 transition"
+            className="bg-[#D33454] text-white text-center py-2 rounded-md hover:bg-[#D33454]/80"
           >
             Login
-          </Link>
+          </Link>)}
         </div>
       </div>
     </nav>

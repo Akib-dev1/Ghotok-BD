@@ -7,10 +7,8 @@ const AuthLayout = () => {
   const { pathname } = useLocation();
   let msg;
   if (pathname === "/login") {
-    document.title = "Login - GhotokBD";
     msg = "Welcome to the login page";
   } else if (pathname === "/signup") {
-    document.title = "Sign Up - GhotokBD";
     msg = "Welcome to the sign up page";
   }
   return (
