@@ -12,15 +12,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { FaGoogle } from "react-icons/fa";
 
 const Signup = () => {
-    const handleFileChange = (e) => {
-      const file = e.target.files[0];
-        if (file) {
-            // Handle file upload logic here
-            console.log("Selected file:", file);
-        }
-    };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    const {name,email,password}=data;
+    const imageFile = data.photo[0];
+    const imageData = new FormData();
+    imageData.append("image", imageFile);
+    const imgData = await axios.post(
+      `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imbbApiKey}`,
+      imageData
+    );
+    const imageURL = imgData.data.data.url;
+    console.log("Image URL:", imageURL);
+  };
   return (
     <>
       <Card className="w-full max-w-md shadow-xl border border-gray-200 bg-white">
@@ -40,9 +54,8 @@ const Signup = () => {
             </Button>
           </CardAction>
         </CardHeader>
-
-        <CardContent>
-          <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <Label htmlFor="name" className="text-[#D33454]">
@@ -52,8 +65,8 @@ const Signup = () => {
                   id="name"
                   type="text"
                   placeholder="John Doe"
-                  required
                   className="focus-visible:ring-[#D33454] border-gray-300"
+                  {...register("name", { required: "Name is required" })}
                 />
               </div>
 
@@ -65,8 +78,14 @@ const Signup = () => {
                   id="email"
                   type="email"
                   placeholder="you@example.com"
-                  required
                   className="focus-visible:ring-[#D33454] border-gray-300"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Invalid email address",
+                    },
+                  })}
                 />
               </div>
 
@@ -78,8 +97,27 @@ const Signup = () => {
                   id="password"
                   type="password"
                   placeholder="••••••"
-                  required
                   className="focus-visible:ring-[#D33454] border-gray-300"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                    validate: {
+                      hasUpper: (value) =>
+                        /[A-Z]/.test(value) ||
+                        "At least one uppercase letter required",
+                      hasLower: (value) =>
+                        /[a-z]/.test(value) ||
+                        "At least one lowercase letter required",
+                      hasNumber: (value) =>
+                        /[0-9]/.test(value) || "At least one number required",
+                      hasSpecial: (value) =>
+                        /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+                        "At least one special character required",
+                    },
+                  })}
                 />
               </div>
 
@@ -91,9 +129,11 @@ const Signup = () => {
                   <Input
                     id="photo"
                     type="file"
-                    accept="image/*"
                     className="hidden"
-                    onChange={handleFileChange}
+                    accept="image/*"
+                    {...register("photo", {
+                      required: "Profile image is required",
+                    })}
                   />
                   <label htmlFor="photo" className="cursor-pointer">
                     Click to upload or drag your image here
@@ -101,23 +141,47 @@ const Signup = () => {
                 </div>
               </div>
             </div>
-          </form>
-        </CardContent>
+          </CardContent>
 
-        <CardFooter className="flex-col gap-2">
-          <Button
-            type="submit"
-            className="w-full bg-[#D33454] hover:bg-[#b72b48] text-white border-none cursor-pointer"
-          >
-            Sign Up
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full text-[#D33454] border-[#D33454] hover:bg-[#E3D4B4] cursor-pointer"
-          >
-            Sign Up with Google
-          </Button>
-        </CardFooter>
+          {errors.password && (
+            <p className="text-red-500 text-center mt-2">
+              {errors.password.message}
+            </p>
+          )}
+
+          {errors.photo && (
+            <p className="text-red-500 text-center mt-2">
+              {errors.photo.message}
+            </p>
+          )}
+
+          {errors.email && (
+            <p className="text-red-500 text-center mt-2">
+              {errors.email.message}
+            </p>
+          )}
+
+          {errors.name && (
+            <p className="text-red-500 text-center mt-2">
+              {errors.name.message}
+            </p>
+          )}
+
+          <CardFooter className="flex-col gap-2 mt-4">
+            <Button
+              type="submit"
+              className="w-full bg-[#D33454] hover:bg-[#b72b48] text-white border-none cursor-pointer"
+            >
+              Sign Up
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full text-[#D33454] border-[#D33454] hover:bg-[#E3D4B4] cursor-pointer"
+            >
+              <FaGoogle />Sign Up with Google
+            </Button>
+          </CardFooter>
+        </form>
       </Card>
     </>
   );

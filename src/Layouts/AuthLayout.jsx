@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet, useLocation } from "react-router";
 import Navbar from "../components/LayoutComponents/Navbar";
+import Footer from "@/Components/LayoutComponents/Footer";
 
 const AuthLayout = () => {
   const { pathname } = useLocation();
@@ -34,11 +35,14 @@ const AuthLayout = () => {
           </div>
 
           {/* Right: Form (via <Outlet />) */}
-          <div className="w-full max-w-sm sm:max-w-md">
+          <div className="w-full max-w-sm lg:max-w-md">
             <Outlet />
           </div>
         </div>
       </div>
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 };

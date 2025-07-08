@@ -12,8 +12,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log("Form submitted:", data);
+  };
   return (
     <>
       <Card className="w-full max-w-sm shadow-xl border border-gray-200 bg-white">
@@ -33,9 +43,8 @@ const Login = () => {
             </Button>
           </CardAction>
         </CardHeader>
-
-        <CardContent>
-          <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent>
             <div className="flex flex-col gap-6">
               {/* Email */}
               <div className="grid gap-2">
@@ -48,6 +57,7 @@ const Login = () => {
                   placeholder="m@example.com"
                   required
                   className="focus-visible:ring-[#D33454] border-gray-300"
+                  {...register("email")}
                 />
               </div>
 
@@ -67,28 +77,49 @@ const Login = () => {
                 <Input
                   id="password"
                   type="password"
-                  required
                   className="focus-visible:ring-[#D33454] border-gray-300"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                    validate: {
+                      hasUpper: (value) =>
+                        /[A-Z]/.test(value) ||
+                        "At least one uppercase letter required",
+                      hasLower: (value) =>
+                        /[a-z]/.test(value) ||
+                        "At least one lowercase letter required",
+                      hasNumber: (value) =>
+                        /[0-9]/.test(value) || "At least one number required",
+                      hasSpecial: (value) =>
+                        /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+                        "At least one special character required",
+                    },
+                  })}
                 />
               </div>
             </div>
-          </form>
-        </CardContent>
+          </CardContent>
 
-        <CardFooter className="flex-col gap-2">
-          <Button
-            type="submit"
-            className="w-full bg-[#D33454] hover:bg-[#b72b48] text-white border-none cursor-pointer"
-          >
-            Login
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full text-[#D33454] border-[#D33454] hover:bg-[#E3D4B4] cursor-pointer"
-          >
-            Login with Google
-          </Button>
-        </CardFooter>
+          {errors.password && <p className="text-red-500 text-center mt-4">{errors.password?.message}</p>}
+
+          <CardFooter className="flex-col gap-2 mt-4">
+            <Button
+              type="submit"
+              className="w-full bg-[#D33454] hover:bg-[#b72b48] text-white border-none cursor-pointer"
+            >
+              Login
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full text-[#D33454] border-[#D33454] hover:bg-[#E3D4B4] cursor-pointer"
+            >
+              <FaGoogle />Login with Google
+            </Button>
+          </CardFooter>
+        </form>
       </Card>
     </>
   );

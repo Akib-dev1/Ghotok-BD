@@ -10,6 +10,7 @@ import Contact from "./Pages/Contact.jsx";
 import Login from "./Pages/Login.jsx";
 import AuthLayout from "./Layouts/AuthLayout.jsx";
 import Signup from "./Pages/Signup.jsx";
+import AuthProvidor from "./Contexts/AuthProvidor";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
-      }
+      },
     ],
   },
   {
@@ -46,13 +47,15 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
-      }
-    ]
-  }
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvidor>
+      <RouterProvider router={router} />
+    </AuthProvidor>
   </StrictMode>
 );
