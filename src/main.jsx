@@ -12,6 +12,7 @@ import AuthLayout from "./Layouts/AuthLayout.jsx";
 import Signup from "./Pages/Signup.jsx";
 import AuthProvidor from "./Contexts/AuthProvidor";
 import { Toaster } from "react-hot-toast";
+import DashboardLayout from "./Layouts/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,16 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <div className="p-4 bg-pink-300">I am the dashboard overview</div>,
+      },
+    ],
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(
