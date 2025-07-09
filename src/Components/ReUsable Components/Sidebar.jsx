@@ -12,83 +12,94 @@ import {
 } from "react-icons/fa";
 import { NavLink } from "react-router";
 
-const navItems = [
-  // 🧑‍💼 User Section
-  {
-    name: "Dashboard",
-    icon: <FaTachometerAlt />,
-    path: "/dashboard",
-  },
-  {
-    name: "Edit Biodata",
-    icon: <FaUserEdit />,
-    path: "/dashboard/editBiodata",
-  },
-  {
-    name: "View Biodata",
-    icon: <FaIdCard />,
-    path: "/dashboard/viewBiodata",
-  },
-  {
-    name: "My Contact Request",
-    icon: <FaEnvelopeOpenText />,
-    path: "/dashboard/contacts",
-  },
-  {
-    name: "Favourites Biodata",
-    icon: <FaHeart />,
-    path: "/dashboard/favourites",
-  },
-
-  // 🛠 Admin Section
-  {
-    name: "Admin Dashboard",
-    icon: <FaUserShield />,
-    path: "/dashboard/admin",
-  },
-  {
-    name: "Manage Users",
-    icon: <FaUsersCog />,
-    path: "/dashboard/manageUsers",
-  },
-  {
-    name: "Approved Premium",
-    icon: <FaStar />,
-    path: "/dashboard/approvedPremium",
-  },
-  {
-    name: "Approved Contact Request",
-    icon: <FaCheckCircle />,
-    path: "/dashboard/approvedContacts",
-  },
-];
-
 const Sidebar = ({ layout = "vertical", onNavigate }) => {
+  const baseClass =
+    "flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition";
+
   return (
     <nav
       className={`flex ${
-        layout === "horizontal" ? "flex-col gap-2" : "flex-col gap-2"
-      }`}
+        layout === "horizontal" ? "flex-col" : "flex-col"
+      } gap-2`}
     >
-      {navItems.map((item, i) => (
-        <NavLink
-          key={i}
-          to={item.path}
-          onClick={onNavigate}
-          className={({ isActive }) =>
-            `flex items-center ${
-              layout === "horizontal" ? "gap-3 px-4 py-2" : "gap-3 px-4 py-2"
-            } rounded-lg font-medium transition ${
-              isActive
-                ? "bg-[#D33454] text-white shadow"
-                : "text-[#B72B48] hover:bg-[#FBEFF0]"
-            }`
-          }
-        >
-          <span className="text-lg">{item.icon}</span>
-          <span>{item.name}</span>
-        </NavLink>
-      ))}
+      {/* 🧑‍💼 User Panel */}
+      <NavLink to="/dashboard" end onClick={onNavigate} className={baseClass}>
+        <FaTachometerAlt className="text-lg" />
+        Dashboard
+      </NavLink>
+
+      <NavLink
+        to="/dashboard/edit-biodata"
+        onClick={onNavigate}
+        className={baseClass}
+      >
+        <FaUserEdit className="text-lg" />
+        Edit Biodata
+      </NavLink>
+
+      <NavLink
+        to="/dashboard/view-biodata"
+        onClick={onNavigate}
+        className={baseClass}
+      >
+        <FaIdCard className="text-lg" />
+        View Biodata
+      </NavLink>
+
+      <NavLink
+        to="/dashboard/my-contact-request"
+        onClick={onNavigate}
+        className={baseClass}
+      >
+        <FaEnvelopeOpenText className="text-lg" />
+        My Contact Request
+      </NavLink>
+
+      <NavLink
+        to="/dashboard/favourite-biodata"
+        onClick={onNavigate}
+        className={baseClass}
+      >
+        <FaHeart className="text-lg" />
+        Favourites Biodata
+      </NavLink>
+
+      {/* 🛠 Admin Panel */}
+      <NavLink
+        to="/dashboard/admin-dashboard"
+        onClick={onNavigate}
+        className={baseClass}
+      >
+        <FaUserShield className="text-lg" />
+        Admin Dashboard
+      </NavLink>
+
+      <NavLink
+        to="/dashboard/manage-users"
+        onClick={onNavigate}
+        className={baseClass}
+      >
+        <FaUsersCog className="text-lg" />
+        Manage Users
+      </NavLink>
+
+      <NavLink
+        to="/dashboard/approved-premium"
+        onClick={onNavigate}
+        className={baseClass}
+      >
+        <FaStar className="text-lg" />
+        Approved Premium
+      </NavLink>
+
+      <NavLink
+        to="/dashboard/approved-contact-requests"
+        onClick={onNavigate}
+        className={baseClass}
+      >
+        <FaCheckCircle className="text-lg" />
+        Approved Contact Request
+      </NavLink>
     </nav>
   );
 };

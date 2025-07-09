@@ -13,6 +13,15 @@ import Signup from "./Pages/Signup.jsx";
 import AuthProvidor from "./Contexts/AuthProvidor";
 import { Toaster } from "react-hot-toast";
 import DashboardLayout from "./Layouts/DashboardLayout";
+import Overview from "./Dashboard Pages/Overview";
+import ManageUsers from "./Dashboard Pages/ManageUsers";
+import ApprovedPremium from "./Dashboard Pages/ApprovedPremium";
+import ApprovedContactRequest from "./Dashboard Pages/ApprovedContactRequest";
+import FavouriteBiodata from "./Dashboard Pages/FavouriteBiodata";
+import EditBiodata from "./Dashboard Pages/EditBiodata";
+import AdminDashboard from "./Dashboard Pages/AdminDashboard";
+import ViewBiodata from "./Dashboard Pages/ViewBiodata";
+import MyContactRequest from "./Dashboard Pages/MyContactRequest";
 
 const router = createBrowserRouter([
   {
@@ -53,13 +62,46 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/dashboard",
+    path: "/",
     element: <DashboardLayout />,
     children: [
       {
         index: true,
-        element: <div className="p-4 bg-pink-300">I am the dashboard overview</div>,
+        path: "/dashboard",
+        element: <Overview />,
       },
+      {
+        path: "/dashboard/manage-users",
+        element: <ManageUsers />,
+      },
+      {
+        path: "/dashboard/approved-premium",
+        element: <ApprovedPremium />,
+      },
+      {
+        path: "/dashboard/approved-contact-requests",
+        element: <ApprovedContactRequest />,
+      },
+      {
+        path: "/dashboard/favourite-biodata",
+        element: <FavouriteBiodata />,
+      },
+      {
+        path: "/dashboard/edit-biodata",
+        element: <EditBiodata />,
+      },
+      {
+        path: "/dashboard/admin-dashboard",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "/dashboard/view-biodata",
+        element: <ViewBiodata />,
+      },
+      {
+        path: "/dashboard/my-contact-request",
+        element: <MyContactRequest />,
+      }
     ],
   }
 ]);

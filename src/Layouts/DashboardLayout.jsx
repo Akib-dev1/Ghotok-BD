@@ -29,8 +29,18 @@ const DashboardLayout = () => {
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden bg-white px-4 py-4 border-b border-gray-200 shadow-sm">
+        <div className="lg:hidden bg-white px-4 py-4 border-b border-gray-200 shadow-sm space-y-4">
+          {/* Sidebar (horizontal layout for small screens) */}
           <Sidebar layout="horizontal" onNavigate={() => setMenuOpen(false)} />
+
+          <Button
+            onClick={logout}
+            variant="outline"
+            className="w-full cursor-pointer border-[#D33454] text-[#D33454] hover:bg-[#E3D4B4]"
+          >
+            <FaSignOutAlt className="mr-2" />
+            Logout
+          </Button>
         </div>
       )}
 
@@ -55,7 +65,7 @@ const DashboardLayout = () => {
           <Button
             onClick={logout}
             variant="outline"
-            className="w-full border-[#D33454] text-[#D33454] hover:bg-[#E3D4B4]"
+            className="w-full cursor-pointer border-[#D33454] text-[#D33454] hover:bg-[#E3D4B4]"
           >
             <FaSignOutAlt className="mr-2" />
             Logout
