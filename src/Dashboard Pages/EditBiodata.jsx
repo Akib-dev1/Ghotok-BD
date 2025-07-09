@@ -44,11 +44,13 @@ const EditBiodata = () => {
     };
     const response = await axios.put("http://localhost:5000/biodata", biodata);
     if (response.data.upsertedCount > 0) {
+      refetch();
       Swal.fire({
         title: "Biodata Added Successfully",
         icon: "success",
       });
     } else if (response.data.modifiedCount > 0) {
+      refetch();
       Swal.fire({
         title: "Biodata Updated Successfully",
         icon: "success",
@@ -62,7 +64,7 @@ const EditBiodata = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-full">
         <ScaleLoader barCount={6} color="#ff1d8d" height={50} width={4} />
       </div>
     );
