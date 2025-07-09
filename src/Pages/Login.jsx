@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "@/Contexts/AuthProvidor";
@@ -19,17 +19,22 @@ import toast from "react-hot-toast";
 
 const Login = () => {
   const { authorizeWithGoogle, error, setError, emailLogin } = use(AuthContext);
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
     const { email, password } = data;
     emailLogin(email, password)
-      .then((result) => {
+      .then(() => {
         toast.success("Login successful");
         setError(null);
+        navigate(state ? state : "/");
+        reset();
       })
       .catch((error) => {
         setError(error.message);
@@ -38,9 +43,10 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     authorizeWithGoogle()
-      .then((result) => {
+      .then(() => {
         toast.success("Login successful");
         setError(null);
+        navigate(state ? state : "/");
       })
       .catch((error) => {
         setError(error.message);

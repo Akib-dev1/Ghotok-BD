@@ -23,6 +23,7 @@ import AdminDashboard from "./Dashboard Pages/AdminDashboard";
 import ViewBiodata from "./Dashboard Pages/ViewBiodata";
 import MyContactRequest from "./Dashboard Pages/MyContactRequest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PrivateRoute from "./PrivateRoutes/PrivateRoute";
 
 const queryClient = new QueryClient();
 
@@ -66,7 +67,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,

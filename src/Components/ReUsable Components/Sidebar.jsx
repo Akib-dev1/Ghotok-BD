@@ -14,7 +14,7 @@ import { NavLink } from "react-router";
 
 const Sidebar = ({ layout = "vertical", onNavigate }) => {
   const baseClass =
-    "flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition";
+    "flex items-center gap-3 px-4 py-2 font-medium transition";
 
   return (
     <nav

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { FaGoogle } from "react-icons/fa";
@@ -21,6 +21,8 @@ import toast from "react-hot-toast";
 const Signup = () => {
   const { emailRegister, updateUser, setError, error, authorizeWithGoogle } =
     use(AuthContext);
+  const { state } = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -30,9 +32,10 @@ const Signup = () => {
 
   const handleGoogleLogin = () => {
     authorizeWithGoogle()
-      .then((result) => {
+      .then(() => {
         toast.success("Sign up successful");
         setError(null);
+        navigate(state ? state : "/");
       })
       .catch((error) => {
         setError(error.message);
@@ -50,12 +53,13 @@ const Signup = () => {
     );
     const imageURL = imgData.data.data.url;
     emailRegister(email, password)
-      .then((result) => {
+      .then(() => {
         updateUser({ displayName: name, photoURL: imageURL })
           .then(() => {
             toast.success("Sign up successful");
             setError(null);
             reset();
+            navigate(state ? state : "/");
           })
           .catch((error) => {
             setError(error.message);
