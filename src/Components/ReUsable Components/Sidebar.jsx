@@ -75,7 +75,7 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
       </NavLink>
 
       <NavLink
-        to="/dashboard/manage-users"
+        to="/dashboard/manage"
         onClick={onNavigate}
         className={baseClass}
       >
@@ -84,7 +84,7 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
       </NavLink>
 
       <NavLink
-        to="/dashboard/approved-premium"
+        to="/dashboard/approvedPremium"
         onClick={onNavigate}
         className={baseClass}
       >
@@ -93,7 +93,7 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
       </NavLink>
 
       <NavLink
-        to="/dashboard/approved-contact-requests"
+        to="/dashboard/approvedContactRequests"
         onClick={onNavigate}
         className={baseClass}
       >

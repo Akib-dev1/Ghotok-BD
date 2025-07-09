@@ -79,15 +79,15 @@ const router = createBrowserRouter([
         element: <Overview />,
       },
       {
-        path: "/dashboard/manage-users",
+        path: "/dashboard/manage",
         element: <ManageUsers />,
       },
       {
-        path: "/dashboard/approved-premium",
+        path: "/dashboard/approvedPremium",
         element: <ApprovedPremium />,
       },
       {
-        path: "/dashboard/approved-contact-requests",
+        path: "/dashboard/approvedContactRequests",
         element: <ApprovedContactRequest />,
       },
       {

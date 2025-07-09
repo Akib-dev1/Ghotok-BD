@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "@/Contexts/AuthProvidor";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Login = () => {
   const { authorizeWithGoogle, error, setError, emailLogin } = use(AuthContext);
@@ -43,9 +44,16 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     authorizeWithGoogle()
-      .then(() => {
+      .then((result) => {
         toast.success("Login successful");
         setError(null);
+        const userData = {
+          displayName: result.user.displayName,
+          email: result.user.email,
+          role: "normal",
+          createdAt: new Date().toISOString(),
+        };
+        axios.post("http://localhost:5000/users", userData);
         navigate(state ? state : "/");
       })
       .catch((error) => {

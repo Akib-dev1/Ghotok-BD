@@ -32,9 +32,16 @@ const Signup = () => {
 
   const handleGoogleLogin = () => {
     authorizeWithGoogle()
-      .then(() => {
+      .then((result) => {
         toast.success("Sign up successful");
         setError(null);
+        const userData = {
+          displayName: result.user.displayName,
+          email: result.user.email,
+          role: "normal",
+          createdAt: new Date().toISOString(),
+        };
+        axios.post("http://localhost:5000/users", userData);
         navigate(state ? state : "/");
       })
       .catch((error) => {
@@ -58,6 +65,13 @@ const Signup = () => {
           .then(() => {
             toast.success("Sign up successful");
             setError(null);
+            const userData = {
+              displayName: name,
+              email: email,
+              role: "normal",
+              createdAt: new Date().toISOString(),
+            };
+            axios.post("http://localhost:5000/users", userData);
             reset();
             navigate(state ? state : "/");
           })
