@@ -51,6 +51,7 @@ const Login = () => {
           displayName: result.user.displayName,
           email: result.user.email,
           role: "normal",
+          isPremium: false,
           createdAt: new Date().toISOString(),
         };
         axios.post("http://localhost:5000/users", userData);

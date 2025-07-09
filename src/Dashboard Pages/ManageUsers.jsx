@@ -14,32 +14,56 @@ const ManageUsers = () => {
     },
   });
   refetch();
-  const handleMakeAdmin = async (userEmail) => {
-    const response = await axios.patch(
-      `http://localhost:5000/users/${userEmail}`,
-      { role: "admin" }
-    );
-    if (response.data.modifiedCount > 0) {
-      Swal.fire({
-        title: "User role updated!",
-        icon: "success",
-      });
-      refetch();
-    }
+  const handleMakeAdmin = (userEmail) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, make admin!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await axios.patch(
+          `http://localhost:5000/users/${userEmail}`,
+          { role: "admin" }
+        );
+        if (response.data.modifiedCount > 0) {
+          Swal.fire({
+            title: "User role updated!",
+            icon: "success",
+          });
+          refetch();
+        }
+      }
+    });
   };
 
-  const handleMakePremium = async (userEmail) => {
-    const response = await axios.patch(
-      `http://localhost:5000/users/${userEmail}`,
-      { role: "premium" }
-    );
-    if (response.data.modifiedCount > 0) {
-      Swal.fire({
-        title: "User is now a premium member!",
-        icon: "success",
-      });
-      refetch();
-    }
+  const handleMakePremium = (userEmail) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, make premium!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await axios.patch(
+          `http://localhost:5000/users/${userEmail}`,
+          { isPremium: true }
+        );
+        if (response.data.modifiedCount > 0) {
+          Swal.fire({
+            title: "User is now a premium member!",
+            icon: "success",
+          });
+          refetch();
+        }
+      }
+    });
   };
   if (isLoading) {
     return (
@@ -85,7 +109,7 @@ const ManageUsers = () => {
                     )}
                   </td>
                   <td className="px-4 py-3 text-center">
-                    {user.role === "premium" ? (
+                    {user.isPremium ? (
                       <span className="text-yellow-600 font-semibold">
                         Premium
                       </span>

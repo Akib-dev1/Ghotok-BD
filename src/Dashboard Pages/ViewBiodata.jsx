@@ -26,6 +26,14 @@ const ViewBiodata = () => {
     },
   });
 
+  const handleReqPremium = async () => {
+    setOpen(false);
+    const { data } = await axios.get(
+      `http://localhost:5000/users/${user?.email}`
+    );
+    console.log(data);
+  };
+
   const fieldClass =
     "bg-[#FFF3F5] p-4 w-full rounded-lg shadow-sm border mb-4 last:mb-0";
 
@@ -155,7 +163,10 @@ const ViewBiodata = () => {
               >
                 Cancel
               </Button>
-              <Button className="bg-[#D33454] text-white hover:bg-[#b72b48]">
+              <Button
+                className="bg-[#D33454] text-white hover:bg-[#b72b48]"
+                onClick={handleReqPremium}
+              >
                 Yes, Make Premium
               </Button>
             </DialogFooter>
