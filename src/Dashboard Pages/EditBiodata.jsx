@@ -1,12 +1,27 @@
-import React from "react";
+import React, { use } from "react";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
+import { AuthContext } from "@/Contexts/AuthProvidor";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import { ScaleLoader } from "react-spinners";
 
 const EditBiodata = () => {
+  const { user } = use(AuthContext);
+
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["biodata", user?.email],
+    queryFn: async () => {
+      const response = await axios.get(
+        `http://localhost:5000/biodata/${user?.email}`
+      );
+      return response.data;
+    },
+  });
   const {
     register,
     handleSubmit,
@@ -14,7 +29,6 @@ const EditBiodata = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("Biodata submitted:", data);
     const imageFile = data.profileImage[0];
     const imageData = new FormData();
     imageData.append("image", imageFile);
@@ -23,17 +37,36 @@ const EditBiodata = () => {
       imageData
     );
     const imageURL = imgData.data.data.url;
+    data.email = user?.email;
     const biodata = {
       ...data,
       profileImage: imageURL,
     };
-    console.log("Biodata with image URL:", biodata);
+    const response = await axios.put("http://localhost:5000/biodata", biodata);
+    if (response.data.upsertedCount > 0) {
+      Swal.fire({
+        title: "Biodata Added Successfully",
+        icon: "success",
+      });
+    } else if (response.data.modifiedCount > 0) {
+      Swal.fire({
+        title: "Biodata Updated Successfully",
+        icon: "success",
+      });
+    }
   };
-
   const renderError = (field) =>
     errors[field] && (
       <span className="text-red-500 text-sm mt-1">This field is required</span>
     );
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ScaleLoader barCount={6} color="#ff1d8d" height={50} width={4} />
+      </div>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-[#FFF3F5] py-4 md:py-12">
@@ -52,6 +85,7 @@ const EditBiodata = () => {
             <select
               {...register("type", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.type} // Set default value if available
             >
               <option value="">Select Type</option>
               <option value="Male">Male</option>
@@ -66,6 +100,7 @@ const EditBiodata = () => {
             <Input
               {...register("name", { required: true })}
               placeholder="Your full name"
+              value={data?.name}
               className="border border-gray-300"
             />
             {renderError("name")}
@@ -87,6 +122,7 @@ const EditBiodata = () => {
             <Label className="text-[#D33454] mb-1">Date of Birth</Label>
             <Input
               type="date"
+              value={data?.dob}
               {...register("dob", { required: true })}
               className="border border-gray-300"
             />
@@ -99,6 +135,7 @@ const EditBiodata = () => {
             <select
               {...register("height", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.height}
             >
               <option value="">Select Height</option>
               <option value="4ft 10in">4'10"</option>
@@ -118,6 +155,7 @@ const EditBiodata = () => {
             <select
               {...register("weight", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.weight}
             >
               <option value="">Select Weight</option>
               <option value="40kg">40kg</option>
@@ -138,6 +176,7 @@ const EditBiodata = () => {
               type="number"
               {...register("age", { required: true })}
               className="border border-gray-300"
+              value={data?.age}
             />
             {renderError("age")}
           </div>
@@ -148,6 +187,7 @@ const EditBiodata = () => {
             <select
               {...register("occupation", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.occupation}
             >
               <option value="">Select Occupation</option>
               <option value="Student">Student</option>
@@ -166,6 +206,7 @@ const EditBiodata = () => {
             <select
               {...register("race", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.race}
             >
               <option value="">Select Race</option>
               <option value="Fair">Fair</option>
@@ -181,6 +222,7 @@ const EditBiodata = () => {
             <Input
               {...register("father", { required: true })}
               className="border border-gray-300"
+              value={data?.father}
             />
             {renderError("father")}
           </div>
@@ -191,6 +233,7 @@ const EditBiodata = () => {
             <Input
               {...register("mother", { required: true })}
               className="border border-gray-300"
+              value={data?.mother}
             />
             {renderError("mother")}
           </div>
@@ -201,6 +244,7 @@ const EditBiodata = () => {
             <select
               {...register("permanentDivision", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.permanentDivision}
             >
               <option value="">Select Division</option>
               <option value="Dhaka">Dhaka</option>
@@ -220,6 +264,7 @@ const EditBiodata = () => {
             <select
               {...register("presentDivision", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.presentDivision}
             >
               <option value="">Select Division</option>
               <option value="Dhaka">Dhaka</option>
@@ -240,6 +285,7 @@ const EditBiodata = () => {
               type="number"
               {...register("partnerAge", { required: true })}
               className="border border-gray-300"
+              value={data?.partnerAge}
             />
             {renderError("partnerAge")}
           </div>
@@ -252,6 +298,7 @@ const EditBiodata = () => {
             <select
               {...register("partnerHeight", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.partnerHeight}
             >
               <option value="">Select Height</option>
               <option value="4ft 10in">4'10"</option>
@@ -273,6 +320,7 @@ const EditBiodata = () => {
             <select
               {...register("partnerWeight", { required: true })}
               className="border border-gray-300 rounded-md px-3 py-2"
+              value={data?.partnerWeight}
             >
               <option value="">Select Weight</option>
               <option value="40kg">40kg</option>
@@ -291,7 +339,7 @@ const EditBiodata = () => {
             <Label className="text-[#D33454] mb-1">Email</Label>
             <Input
               {...register("email")}
-              defaultValue="user@example.com"
+              defaultValue={user?.email}
               readOnly
               className="border border-gray-300 bg-gray-100 cursor-not-allowed"
             />
@@ -304,6 +352,7 @@ const EditBiodata = () => {
               type="tel"
               {...register("mobile", { required: true })}
               className="border border-gray-300"
+              value={data?.mobile}
             />
             {renderError("mobile")}
           </div>

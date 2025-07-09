@@ -22,6 +22,9 @@ import EditBiodata from "./Dashboard Pages/EditBiodata";
 import AdminDashboard from "./Dashboard Pages/AdminDashboard";
 import ViewBiodata from "./Dashboard Pages/ViewBiodata";
 import MyContactRequest from "./Dashboard Pages/MyContactRequest";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -101,16 +104,18 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/my-contact-request",
         element: <MyContactRequest />,
-      }
+      },
     ],
-  }
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvidor>
-      <RouterProvider router={router} />
-      <Toaster position="top-center" reverseOrder={true} />
-    </AuthProvidor>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvidor>
+        <RouterProvider router={router} />
+        <Toaster position="top-center" reverseOrder={true} />
+      </AuthProvidor>
+    </QueryClientProvider>
   </StrictMode>
 );
