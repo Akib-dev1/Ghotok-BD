@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,6 +16,7 @@ import Swal from "sweetalert2";
 
 const ViewBiodata = () => {
   const [open, setOpen] = useState(false);
+  const [done, setDone] = useState(false);
   const { user } = use(AuthContext);
   const { data, isLoading } = useQuery({
     queryKey: ["biodata", user?.email],
@@ -26,6 +27,14 @@ const ViewBiodata = () => {
       return response.data;
     },
   });
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/users/premium/${user?.email}`)
+      .then((res) => {
+        setDone(res.data?.isHandled);
+      });
+  }, [user?.email]);
 
   const handleReqPremium = async () => {
     setOpen(false);
@@ -143,12 +152,18 @@ const ViewBiodata = () => {
               alt="Profile"
               className="rounded-xl shadow-lg w-full max-w-xs mb-6 border border-gray-200"
             />
-            <Button
-              onClick={() => setOpen(true)}
-              className="bg-[#D33454] hover:bg-[#b72b48] text-white text-lg px-6 py-3 rounded-md"
-            >
-              Make Biodata Premium
-            </Button>
+            {!done ? (
+              <Button
+                onClick={() => setOpen(true)}
+                className="bg-[#D33454] hover:bg-[#b72b48] text-white text-lg px-6 py-3 rounded-md"
+              >
+                Make Biodata Premium
+              </Button>
+            ) : (
+              <span className="bg-[#D33454] text-white text-lg px-6 py-1.5 rounded-md">
+                Premium Account
+              </span>
+            )}
           </div>
         </div>
 

@@ -5,21 +5,6 @@ import axios from "axios";
 import { ScaleLoader } from "react-spinners";
 import Swal from "sweetalert2";
 
-const demoRequests = [
-  {
-    _id: "bd123",
-    name: "Akib Rahman",
-    email: "akibanj2017@gmail.com",
-    biodataID: "B-1021",
-  },
-  {
-    _id: "bd456",
-    name: "Sarah Islam",
-    email: "sarah@example.com",
-    biodataID: "B-1045",
-  },
-];
-
 const ApprovedPremium = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["premiumRequests"],
