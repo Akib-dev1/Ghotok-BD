@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthContext } from "@/Contexts/AuthProvidor";
 import { ScaleLoader } from "react-spinners";
+import Swal from "sweetalert2";
 
 const ViewBiodata = () => {
   const [open, setOpen] = useState(false);
@@ -31,7 +32,14 @@ const ViewBiodata = () => {
     const { data } = await axios.get(
       `http://localhost:5000/users/${user?.email}`
     );
-    console.log(data);
+    try {
+      await axios.post("http://localhost:5000/users/premium", data);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: `${error.response.data.message}`,
+      });
+    }
   };
 
   const fieldClass =
