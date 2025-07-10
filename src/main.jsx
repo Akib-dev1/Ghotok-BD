@@ -24,6 +24,9 @@ import ViewBiodata from "./Dashboard Pages/ViewBiodata";
 import MyContactRequest from "./Dashboard Pages/MyContactRequest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PrivateRoute from "./PrivateRoutes/PrivateRoute";
+import Unauthorized from "./PrivateRoutes/Unauthorized";
+import AdminRoute from "./PrivateRoutes/AdminRoute";
+import UserRoute from "./PrivateRoutes/UserRoute";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +69,10 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/unauthorized",
+    element: <Unauthorized />,
+  },
+  {
     path: "/",
     element: (
       <PrivateRoute>
@@ -74,41 +81,95 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        index: true,
-        path: "/dashboard",
-        element: <Overview />,
+        path: "/dashboard/overview",
+        element: (
+          <PrivateRoute>
+            <UserRoute>
+              <Overview />
+            </UserRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/manage",
-        element: <ManageUsers />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/approvedPremium",
-        element: <ApprovedPremium />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ApprovedPremium />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/approvedContactRequests",
-        element: <ApprovedContactRequest />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ApprovedContactRequest />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/favourite-biodata",
-        element: <FavouriteBiodata />,
+        element: (
+          <PrivateRoute>
+            <UserRoute>
+              <FavouriteBiodata />
+            </UserRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/edit-biodata",
-        element: <EditBiodata />,
+        element: (
+          <PrivateRoute>
+            <UserRoute>
+              <EditBiodata />
+            </UserRoute>
+          </PrivateRoute>
+        ),
       },
       {
-        path: "/dashboard/admin-dashboard",
-        element: <AdminDashboard />,
+        index: true,
+        path: "/dashboard",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/view-biodata",
-        element: <ViewBiodata />,
+        element: (
+          <PrivateRoute>
+            <UserRoute>
+              <ViewBiodata />
+            </UserRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/my-contact-request",
-        element: <MyContactRequest />,
+        element: (
+          <PrivateRoute>
+            <UserRoute>
+              <MyContactRequest />
+            </UserRoute>
+          </PrivateRoute>
+        ),
       },
     ],
   },
