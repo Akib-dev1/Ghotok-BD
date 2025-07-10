@@ -98,7 +98,7 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
       {/* 🛠 Admin Panel */}
       {data?.role === "admin" && (
         <>
-          <NavLink to="/dashboard" onClick={onNavigate} className={baseClass}>
+          <NavLink end to="/dashboard" onClick={onNavigate} className={baseClass}>
             <FaUserShield className="text-lg" />
             Admin Dashboard
           </NavLink>

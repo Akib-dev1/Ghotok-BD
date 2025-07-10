@@ -2,12 +2,11 @@ import { AuthContext } from "@/Contexts/AuthProvidor";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { use } from "react";
-import { Navigate, useLocation } from "react-router";
+import { Navigate } from "react-router";
 import { ScaleLoader } from "react-spinners";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = use(AuthContext);
-  const { pathname } = useLocation();
   const { data, isLoading } = useQuery({
     queryKey: ["admin", user?.email],
     enabled: !!user?.email,
@@ -28,7 +27,7 @@ const AdminRoute = ({ children }) => {
   if (data?.role === "admin") {
     return children;
   }
-  return <Navigate state={pathname} to="/unauthorized"></Navigate>;
+  return <Navigate to="/unauthorized"></Navigate>;
 };
 
 export default AdminRoute;
