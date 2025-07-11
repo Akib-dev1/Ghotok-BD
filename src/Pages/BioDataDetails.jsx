@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { ScaleLoader } from "react-spinners";
+import Swal from "sweetalert2";
+import { AuthContext } from "@/Contexts/AuthProvidor";
 
 const BioDataDetails = () => {
+  const auth = use(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
+  const [favorite, setFavorite] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:5000/users").then((response) => {
       setUser(response.data);
     });
-  }, []);
+    axios.get("http://localhost:5000/biodata/favorite").then((response) => {
+      setFavorite(response.data);
+    });
+  }, [favorite]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["biodatass"],
@@ -35,6 +42,13 @@ const BioDataDetails = () => {
 
   const userData = user.find((item) => item.biodataID === biodata?.biodataID);
 
+  const favoriteData = favorite.find(
+    (item) =>
+      item.biodataID === biodata?.biodataID && item.email === auth?.user?.email
+  );
+
+  const myBiodata = biodata.email === auth?.user?.email;
+
   if (!biodata) {
     return (
       <div className="text-center text-lg text-gray-600 mt-10">
@@ -42,8 +56,7 @@ const BioDataDetails = () => {
       </div>
     );
   }
-
-  const isPremium = userData?.isPremium; // Assume user role is passed via props/context
+  const isPremium = userData?.isPremium;
 
   const similarBiodatas = data
     .filter(
@@ -51,6 +64,26 @@ const BioDataDetails = () => {
         item.type === biodata.type && item.biodataID !== biodata.biodataID
     )
     .slice(0, 3);
+
+  const handleAddToFavourites = async () => {
+    const profileData = {
+      name: biodata.name,
+      email: auth?.user?.email,
+      biodataID: biodata.biodataID,
+      permanentAddress: biodata.permanentDivision,
+      occupation: biodata.occupation,
+    };
+    const { data } = await axios.post(
+      "http://localhost:5000/biodata/favorite",
+      profileData
+    );
+    if (data.insertedId) {
+      Swal.fire({
+        title: "Added to Favourites!",
+        icon: "success",
+      });
+    }
+  };
 
   return (
     <section className="min-h-screen py-10 px-4 font-poppins bg-[#FFF3F5]">
@@ -94,9 +127,20 @@ const BioDataDetails = () => {
 
             {/* Action Buttons */}
             <div className="mt-6 flex gap-4">
-              <Button className="bg-[#D33454] text-white hover:bg-[#b72b48]">
-                Add to Favourites
-              </Button>
+              {!favoriteData ? (
+                !myBiodata && (
+                  <Button
+                    className="bg-[#D33454] text-white hover:bg-[#b72b48]"
+                    onClick={handleAddToFavourites}
+                  >
+                    Add to Favourites
+                  </Button>
+                )
+              ) : (
+                <Button className="bg-[#D33454] text-white hover:bg-[#b72b48]">
+                  Added to Favourites
+                </Button>
+              )}
               {!isPremium && (
                 <Button
                   variant="outline"
@@ -133,7 +177,7 @@ const BioDataDetails = () => {
                   <p>Division: {user.presentDivision}</p>
                   <p>Occupation: {user.occupation}</p>
                   <Button
-                    onClick={() => navigate(`/biodata/${user.biodataID}`)}
+                    onClick={() => navigate(`/biodatas/${user.biodataID}`)}
                     className="mt-3 w-full bg-[#D33454] hover:bg-[#b72b48] text-white text-sm"
                   >
                     View Profile
