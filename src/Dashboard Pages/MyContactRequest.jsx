@@ -1,39 +1,28 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import React, { useState } from "react";
+import { ScaleLoader } from "react-spinners";
 
-const demoContactRequests = [
-  {
-    id: 1,
-    name: "Rahim Uddin",
-    biodataId: "BD101",
-    status: "Approved",
-    mobile: "017XXXXXXXX",
-    email: "rahim@example.com",
-  },
-  {
-    id: 2,
-    name: "Salma Akter",
-    biodataId: "BD202",
-    status: "Pending",
-    mobile: "",
-    email: "",
-  },
-  {
-    id: 3,
-    name: "Tariq Khan",
-    biodataId: "BD303",
-    status: "Approved",
-    mobile: "018XXXXXXXX",
-    email: "tariq@example.com",
-  },
-];
-
-export default function MyContactRequest() {
-  const [requests, setRequests] = useState(demoContactRequests);
+const MyContactRequest = () => {
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["contactRequests"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:5000/biodata/contact");
+      return response.data;
+    },
+  });
 
   const handleDelete = (id) => {
-    const filtered = requests.filter((req) => req.id !== id);
-    setRequests(filtered);
+    console.log(`Deleting request with ID: ${id}`);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <ScaleLoader barCount={6} color="#ff1d8d" height={50} width={4} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
@@ -55,14 +44,14 @@ export default function MyContactRequest() {
               </tr>
             </thead>
             <tbody>
-              {requests.map((req) => (
+              {data?.map((req) => (
                 <tr key={req.id} className="border-t">
-                  <td className="px-4 py-2 border">{req.name}</td>
-                  <td className="px-4 py-2 border">{req.biodataId}</td>
+                  <td className="px-4 py-2 border">{req.biodataName}</td>
+                  <td className="px-4 py-2 border">{req.biodataID}</td>
                   <td className="px-4 py-2 border">
                     <span
-                      className={`px-2 py-1 rounded text-white text-xs ${
-                        req.status === "Approved"
+                      className={`px-2 capitalize py-1 rounded text-white text-xs ${
+                        req.status === "approved"
                           ? "bg-green-500"
                           : "bg-yellow-500"
                       }`}
@@ -71,14 +60,14 @@ export default function MyContactRequest() {
                     </span>
                   </td>
                   <td className="px-4 py-2 border">
-                    {req.status === "Approved" ? req.mobile : "--"}
+                    {req.status === "approved" ? req.biodataMobile : "--"}
                   </td>
                   <td className="px-4 py-2 border">
-                    {req.status === "Approved" ? req.email : "--"}
+                    {req.status === "approved" ? req.biodataEmail : "--"}
                   </td>
                   <td className="px-4 py-2 border">
                     <button
-                      onClick={() => handleDelete(req.id)}
+                      onClick={() => handleDelete(req.biodataID)}
                       className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs"
                     >
                       Delete
@@ -87,7 +76,7 @@ export default function MyContactRequest() {
                 </tr>
               ))}
 
-              {requests.length === 0 && (
+              {data?.length === 0 && (
                 <tr>
                   <td colSpan="6" className="py-6 text-gray-500">
                     You have no contact requests yet.
@@ -100,4 +89,6 @@ export default function MyContactRequest() {
       </div>
     </div>
   );
-}
+};
+
+export default MyContactRequest;

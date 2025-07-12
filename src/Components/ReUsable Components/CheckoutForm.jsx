@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { PulseLoader } from "react-spinners";
 import Swal from "sweetalert2";
 
-const CheckoutForm = ({ biodataID }) => {
+const CheckoutForm = ({ biodataID, mobile, email, name }) => {
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
@@ -67,10 +67,14 @@ const CheckoutForm = ({ biodataID }) => {
       if (result.paymentIntent.status === "succeeded") {
         setErrorz(null);
         const paymentData = {
+          biodataName: name,
+          biodataMobile: mobile,
+          biodataEmail: email,
           email: user?.email,
           biodataID: biodataID,
           amount: 5,
           paymentID: result?.paymentIntent?.id,
+          status: "pending",
         };
         axios
           .post("http://localhost:5000/biodata/contact", paymentData)

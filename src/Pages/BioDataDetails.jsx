@@ -13,6 +13,7 @@ const BioDataDetails = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState([]);
   const [favorite, setFavorite] = useState([]);
+  const [contactData, setContactData] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:5000/users").then((response) => {
       setUser(response.data);
@@ -20,7 +21,10 @@ const BioDataDetails = () => {
     axios.get("http://localhost:5000/biodata/favorite").then((response) => {
       setFavorite(response.data);
     });
-  }, [favorite]);
+    axios.get("http://localhost:5000/biodata/contact").then((response) => {
+      setContactData(response.data);
+    });
+  }, [favorite, contactData]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["biodatass"],
@@ -43,6 +47,11 @@ const BioDataDetails = () => {
   const userData = user.find((item) => item.email === auth?.user?.email);
 
   const favoriteData = favorite.find(
+    (item) =>
+      item.biodataID === biodata?.biodataID && item.email === auth?.user?.email
+  );
+
+  const contactDataItem = contactData.find(
     (item) =>
       item.biodataID === biodata?.biodataID && item.email === auth?.user?.email
   );
@@ -141,7 +150,7 @@ const BioDataDetails = () => {
                   Added to Favourites
                 </Button>
               )}
-              {(!isPremium && !myBiodata) && (
+              {!isPremium && !myBiodata && !contactDataItem && (
                 <Button
                   variant="outline"
                   onClick={() =>
@@ -151,6 +160,26 @@ const BioDataDetails = () => {
                   Request Contact Info
                 </Button>
               )}
+
+              {!isPremium &&
+                !myBiodata &&
+                contactDataItem?.status === "pending" && (
+                  <Button
+                    variant="outline"
+                    disabled
+                    className="cursor-not-allowed opacity-60"
+                  >
+                    Request Pending
+                  </Button>
+                )}
+
+              {!isPremium &&
+                !myBiodata &&
+                contactDataItem?.status === "approved" && (
+                  <p className="text-green-600 font-medium mt-2 flex items-center gap-1">
+                    <span className="text-lg">✔</span> Contact Info Approved
+                  </p>
+                )}
             </div>
           </div>
         </div>
