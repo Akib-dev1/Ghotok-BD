@@ -47,57 +47,63 @@ const FavouriteBiodata = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-full">
-        <ScaleLoader barCount={6} color="#ff1d8d" height={50} width={4} />
+      <div className="flex justify-center items-center h-screen bg-[#FFF3F5]">
+        <ScaleLoader barCount={6} color="#D33454" height={50} width={4} />
       </div>
     );
   }
 
   return (
-    <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto py-8">
-      <h1 className="text-2xl font-semibold mb-6 text-center">
-        My Favourite Biodatas
-      </h1>
-      <div className="overflow-x-auto rounded-xl shadow">
-        <table className="min-w-full text-sm text-left border border-gray-200">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="px-4 py-3 border">Name</th>
-              <th className="px-4 py-3 border">Biodata ID</th>
-              <th className="px-4 py-3 border">Permanent Address</th>
-              <th className="px-4 py-3 border">Occupation</th>
-              <th className="px-4 py-3 border text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {favourites.map((item) => (
-              <tr key={item._id} className="hover:bg-gray-50">
-                <td className="px-4 py-3 border">{item.name}</td>
-                <td className="px-4 py-3 border">{item.biodataID}</td>
-                <td className="px-4 py-3 border">{item.permanentAddress}</td>
-                <td className="px-4 py-3 border">{item.occupation}</td>
-                <td className="px-4 py-3 border text-center">
-                  <button
-                    onClick={() => handleDelete(item._id)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md flex items-center justify-center gap-2 text-sm"
-                  >
-                    <FaTrashAlt className="text-white" />
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {favourites.length === 0 && (
+    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 font-poppins">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
+        <h1 className="text-3xl font-bold mb-8 text-center text-[#D33454]">
+          My Favourite Biodatas
+        </h1>
+
+        <div className="overflow-x-auto rounded-lg">
+          <table className="min-w-full text-sm border border-gray-300 text-center">
+            <thead className="bg-[#D33454] text-white">
               <tr>
-                <td colSpan="5" className="px-4 py-6 text-center text-gray-500">
-                  No favourite biodatas found.
-                </td>
+                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">Biodata ID</th>
+                <th className="px-4 py-3">Permanent Address</th>
+                <th className="px-4 py-3">Occupation</th>
+                <th className="px-4 py-3">Action</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-gray-700 font-[Poppins]">
+              {favourites.map((item) => (
+                <tr
+                  key={item._id}
+                  className="hover:bg-[#fdf1f2] border-b transition"
+                >
+                  <td className="px-4 py-3">{item.name}</td>
+                  <td className="px-4 py-3">{item.biodataID}</td>
+                  <td className="px-4 py-3">{item.permanentAddress}</td>
+                  <td className="px-4 py-3">{item.occupation}</td>
+                  <td className="px-4 py-3 flex justify-center">
+                    <button
+                      onClick={() => handleDelete(item._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs flex items-center justify-center gap-2 transition"
+                    >
+                      <FaTrashAlt className="text-white text-sm" />
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {favourites.length === 0 && (
+                <tr>
+                  <td colSpan="5" className="py-6 text-gray-500 italic">
+                    No favourite biodatas found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
+import Swal from "sweetalert2";
 
 const MyContactRequest = () => {
-  const { data, isLoading, refetch } = useQuery({
+  const [visibleData, setVisibleData] = useState([]);
+
+  const { data, isLoading } = useQuery({
     queryKey: ["contactRequests"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:5000/biodata/contact");
@@ -12,45 +15,66 @@ const MyContactRequest = () => {
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      setVisibleData(data);
+    }
+  }, [data]);
+
   const handleDelete = (id) => {
-    console.log(`Deleting request with ID: ${id}`);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This will remove the request from your history.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#D33454",
+      cancelButtonColor: "#999",
+      confirmButtonText: "Yes, remove it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setVisibleData((prev) => prev.filter((item) => item.biodataID !== id));
+      }
+    });
   };
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-full">
-        <ScaleLoader barCount={6} color="#ff1d8d" height={50} width={4} />
+      <div className="flex justify-center items-center h-screen bg-[#FFF3F5]">
+        <ScaleLoader barCount={6} color="#D33454" height={50} width={4} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-6 flex justify-center">
-      <div className="bg-white shadow-lg rounded-lg w-full max-w-6xl p-6">
-        <h2 className="text-2xl font-bold mb-6 text-center">
+    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 font-poppins">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
+        <h2 className="text-3xl font-bold text-center text-[#D33454] mb-8">
           My Contact Requests
         </h2>
 
         <div className="overflow-x-auto">
-          <table className="w-full border border-gray-300 text-sm text-center">
-            <thead className="bg-gray-200 text-gray-700">
+          <table className="min-w-full text-sm border border-gray-300 text-center">
+            <thead className="bg-[#D33454] text-white">
               <tr>
-                <th className="px-4 py-2 border">Name</th>
-                <th className="px-4 py-2 border">Biodata ID</th>
-                <th className="px-4 py-2 border">Status</th>
-                <th className="px-4 py-2 border">Mobile No</th>
-                <th className="px-4 py-2 border">Email</th>
-                <th className="px-4 py-2 border">Action</th>
+                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">Biodata ID</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Mobile No</th>
+                <th className="px-4 py-3">Email</th>
+                <th className="px-4 py-3">Action</th>
               </tr>
             </thead>
-            <tbody>
-              {data?.map((req,index) => (
-                <tr key={index} className="border-t">
-                  <td className="px-4 py-2 border">{req.biodataName}</td>
-                  <td className="px-4 py-2 border">{req.biodataID}</td>
-                  <td className="px-4 py-2 border">
+            <tbody className="text-gray-700 font-[Poppins]">
+              {visibleData?.map((req, index) => (
+                <tr
+                  key={index}
+                  className="hover:bg-[#fdf1f2] border-b transition"
+                >
+                  <td className="px-4 py-3">{req.biodataName}</td>
+                  <td className="px-4 py-3">{req.biodataID}</td>
+                  <td className="px-4 py-3">
                     <span
-                      className={`px-2 capitalize py-1 rounded text-white text-xs ${
+                      className={`px-2 py-1 capitalize text-xs font-semibold text-white rounded ${
                         req.status === "approved"
                           ? "bg-green-500"
                           : "bg-yellow-500"
@@ -59,26 +83,25 @@ const MyContactRequest = () => {
                       {req.status}
                     </span>
                   </td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-4 py-3">
                     {req.status === "approved" ? req.biodataMobile : "--"}
                   </td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-4 py-3">
                     {req.status === "approved" ? req.biodataEmail : "--"}
                   </td>
-                  <td className="px-4 py-2 border">
+                  <td className="px-4 py-3">
                     <button
                       onClick={() => handleDelete(req.biodataID)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs"
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition"
                     >
                       Delete
                     </button>
                   </td>
                 </tr>
               ))}
-
-              {data?.length === 0 && (
+              {visibleData?.length === 0 && (
                 <tr>
-                  <td colSpan="6" className="py-6 text-gray-500">
+                  <td colSpan="6" className="py-6 text-gray-500 italic">
                     You have no contact requests yet.
                   </td>
                 </tr>
@@ -87,7 +110,7 @@ const MyContactRequest = () => {
           </table>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
