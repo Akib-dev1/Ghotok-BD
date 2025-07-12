@@ -25,7 +25,7 @@ const MyContactRequest = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
+    <div className="min-h-screen p-6 flex justify-center">
       <div className="bg-white shadow-lg rounded-lg w-full max-w-6xl p-6">
         <h2 className="text-2xl font-bold mb-6 text-center">
           My Contact Requests
@@ -44,8 +44,8 @@ const MyContactRequest = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.map((req) => (
-                <tr key={req.id} className="border-t">
+              {data?.map((req,index) => (
+                <tr key={index} className="border-t">
                   <td className="px-4 py-2 border">{req.biodataName}</td>
                   <td className="px-4 py-2 border">{req.biodataID}</td>
                   <td className="px-4 py-2 border">

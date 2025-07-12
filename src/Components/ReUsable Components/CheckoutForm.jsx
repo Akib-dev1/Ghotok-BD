@@ -67,6 +67,7 @@ const CheckoutForm = ({ biodataID, mobile, email, name }) => {
       if (result.paymentIntent.status === "succeeded") {
         setErrorz(null);
         const paymentData = {
+          requestedBy: user?.displayName,
           biodataName: name,
           biodataMobile: mobile,
           biodataEmail: email,

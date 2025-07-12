@@ -1,89 +1,102 @@
-import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import React from "react";
+import { ScaleLoader } from "react-spinners";
+import Swal from "sweetalert2";
 
-const demoRequests = [
-  {
-    id: 1,
-    name: "Rahim Uddin",
-    email: "rahim@example.com",
-    biodataId: "BD101",
-    approved: false,
-  },
-  {
-    id: 2,
-    name: "Salma Akter",
-    email: "salma@example.com",
-    biodataId: "BD202",
-    approved: true,
-  },
-  {
-    id: 3,
-    name: "Tariq Khan",
-    email: "tariq@example.com",
-    biodataId: "BD303",
-    approved: false,
-  },
-];
-
-export default function ApprovedContactRequest() {
-  const [requests, setRequests] = useState(demoRequests);
+const ApprovedContactRequest = () => {
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["contactRequests"],
+    queryFn: async () => {
+      const response = await axios.get("http://localhost:5000/biodata/contact");
+      return response.data;
+    },
+  });
 
   const handleApprove = (id) => {
-    const updated = requests.map((req) =>
-      req.id === id ? { ...req, approved: true } : req
-    );
-    setRequests(updated);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Approve it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.patch(`http://localhost:5000/biodata/contact/${id}`).then(() => {
+          Swal.fire({
+            title: "Request Approved!",
+            icon: "success",
+          });
+          refetch();
+        });
+      }
+    });
   };
 
-  return (
-    <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
-      <div className="bg-white shadow-xl rounded-lg w-full max-w-6xl p-6">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          All Contact Requests
-        </h2>
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-[#FFF3F5]">
+        <ScaleLoader barCount={6} color="#D33454" height={50} width={4} />
+      </div>
+    );
+  }
 
-        <div className="overflow-x-auto">
-          <table className="w-full table-auto border border-gray-300 rounded-lg">
-            <thead className="bg-gray-200 text-gray-700">
-              <tr>
-                <th className="px-4 py-2 border">Name</th>
-                <th className="px-4 py-2 border">Email</th>
-                <th className="px-4 py-2 border">Biodata ID</th>
-                <th className="px-4 py-2 border">Approval</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((req) => (
-                <tr key={req.id} className="text-center">
-                  <td className="px-4 py-2 border">{req.name}</td>
-                  <td className="px-4 py-2 border">{req.email}</td>
-                  <td className="px-4 py-2 border">{req.biodataId}</td>
-                  <td className="px-4 py-2 border">
-                    {req.approved ? (
-                      <span className="text-green-600 font-semibold">
-                        Approved
-                      </span>
-                    ) : (
-                      <button
-                        onClick={() => handleApprove(req.id)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded"
-                      >
-                        Approve
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-              {requests.length === 0 && (
+  return (
+    <section className="bg-[#FFF3F5] min-h-screen py-10">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto">
+        <div className="bg-white p-8 rounded-xl shadow-lg border border-pink-100">
+          <h2 className="text-3xl font-bold text-center text-[#D33454] mb-8 great-vibes">
+            All Contact Requests
+          </h2>
+
+          <div className="overflow-x-auto rounded-lg">
+            <table className="w-full text-sm border border-gray-300 text-center">
+              <thead className="bg-pink-100 text-[#D33454] font-semibold">
                 <tr>
-                  <td colSpan="4" className="py-6 text-center text-gray-500">
-                    No contact requests found.
-                  </td>
+                  <th className="px-4 py-3 border">Name</th>
+                  <th className="px-4 py-3 border">Email</th>
+                  <th className="px-4 py-3 border">Biodata ID</th>
+                  <th className="px-4 py-3 border">Approval</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="text-gray-700 font-[Poppins]">
+                {data.map((req) => (
+                  <tr key={req._id} className="hover:bg-pink-50 transition">
+                    <td className="px-4 py-3 border">{req.requestedBy}</td>
+                    <td className="px-4 py-3 border">{req.email}</td>
+                    <td className="px-4 py-3 border">{req.biodataID}</td>
+                    <td className="px-4 py-3 border">
+                      {req.status === "approved" ? (
+                        <span className="text-green-600 font-medium">
+                          ✔ Approved
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => handleApprove(req._id)}
+                          className="bg-[#D33454] hover:bg-[#b82c46] text-white text-sm px-4 py-2 rounded-lg transition"
+                        >
+                          Approve
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+                {data.length === 0 && (
+                  <tr>
+                    <td colSpan="4" className="py-6 text-gray-500 italic">
+                      No contact requests found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default ApprovedContactRequest;
