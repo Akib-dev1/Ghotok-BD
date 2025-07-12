@@ -52,7 +52,7 @@ const Checkout = () => {
 
           <div className="flex justify-center">
             <Elements stripe={stripePromise}>
-              <CheckoutForm />
+              <CheckoutForm biodataID={biodata?.biodataID} />
             </Elements>
           </div>
           <Link

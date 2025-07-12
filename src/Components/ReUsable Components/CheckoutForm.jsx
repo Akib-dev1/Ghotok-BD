@@ -1,12 +1,29 @@
+import { AuthContext } from "@/Contexts/AuthProvidor";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React, { useState } from "react";
+import axios from "axios";
+import React, { use, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { PulseLoader } from "react-spinners";
+import Swal from "sweetalert2";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ biodataID }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
+  const { user } = use(AuthContext);
   const [errorz, setErrorz] = useState(null);
   const [processing, setProcessing] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:5000/create-payment-intent", {
+        amount: 5,
+      })
+      .then((response) => {
+        setClientSecret(response.data.clientSecret);
+      });
+  }, []);
 
   const handleSubmit = async (event) => {
     setProcessing(true);
@@ -28,12 +45,47 @@ const CheckoutForm = () => {
     });
 
     if (error) {
-      console.log("[error]", error);
       setErrorz(error.message);
       setProcessing(false);
     } else {
       console.log("[PaymentMethod]", paymentMethod);
       setErrorz(null);
+    }
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: card,
+        billing_details: {
+          name: user?.displayName,
+          email: user?.email,
+        },
+      },
+    });
+    if (result.error) {
+      setErrorz(result.error.message);
+      setProcessing(false);
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        setErrorz(null);
+        const paymentData = {
+          email: user?.email,
+          biodataID: biodataID,
+          amount: 5,
+          paymentID: result?.paymentIntent?.id,
+        };
+        axios
+          .post("http://localhost:5000/biodata/contact", paymentData)
+          .then(() => {
+            Swal.fire({
+              title: "Payment successful!",
+              text: "Your request has been submitted.",
+              icon: "success",
+            });
+            navigate(`/biodatas/${biodataID}`);
+          });
+      } else {
+        setErrorz("Payment failed. Please try again.");
+      }
+      setProcessing(false);
     }
   };
 
