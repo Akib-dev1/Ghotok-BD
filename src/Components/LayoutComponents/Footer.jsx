@@ -4,7 +4,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaGithub } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="bg-[#FAF9F6] border-t border-gray-200 text-slate-800 py-8 px-4 md:px-12">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         
         <div className="space-y-2">
           <h1 className="text-2xl great-vibes font-bold text-[#D33454]">GhotokBD</h1>

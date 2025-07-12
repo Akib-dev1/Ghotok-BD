@@ -6,7 +6,7 @@ import FeatureCard from "@/Components/ReUsable Components/FeatureCard";
 const About = () => {
   return (
     <section className="bg-[#FFF3F5] text-gray-800 py-16 px-4 font-poppins">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto space-y-12">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto space-y-12">
         {/* Header */}
         <div className="text-center">
           <h1 className="text-5xl font-bold text-[#D33454] mb-2 great-vibes">

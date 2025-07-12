@@ -40,7 +40,7 @@ const BioDataDetails = () => {
 
   const biodata = data.find((item) => item.biodataID == id);
 
-  const userData = user.find((item) => item.biodataID === biodata?.biodataID);
+  const userData = user.find((item) => item.email === auth?.user?.email);
 
   const favoriteData = favorite.find(
     (item) =>
@@ -117,7 +117,7 @@ const BioDataDetails = () => {
               <p>Expected Partner Age: {biodata.partnerAge}</p>
               <p>Expected Partner Height: {biodata.partnerHeight}</p>
               <p>Expected Partner Weight: {biodata.partnerWeight}</p>
-              {isPremium && (
+              {(isPremium || myBiodata) && (
                 <>
                   <p>Email: {biodata.email}</p>
                   <p>Mobile: {biodata.mobile}</p>
@@ -141,10 +141,12 @@ const BioDataDetails = () => {
                   Added to Favourites
                 </Button>
               )}
-              {!isPremium && (
+              {(!isPremium && !myBiodata) && (
                 <Button
                   variant="outline"
-                  onClick={() => navigate(`/checkout/${biodata.biodataID}`)}
+                  onClick={() =>
+                    navigate(`/biodatas/checkout/${biodata.biodataID}`)
+                  }
                 >
                   Request Contact Info
                 </Button>

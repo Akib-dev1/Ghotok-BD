@@ -28,6 +28,7 @@ import Unauthorized from "./PrivateRoutes/Unauthorized";
 import AdminRoute from "./PrivateRoutes/AdminRoute";
 import UserRoute from "./PrivateRoutes/UserRoute";
 import BioDataDetails from "./Pages/BioDataDetails";
+import Checkout from "./Pages/Checkout";
 
 const queryClient = new QueryClient();
 
@@ -50,7 +51,15 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <BioDataDetails />
           </PrivateRoute>
-        ),
+        )
+      },
+      {
+        path: "/biodatas/checkout/:id",
+        element: (
+          <PrivateRoute>
+            <Checkout />
+          </PrivateRoute>
+        )
       },
       {
         path: "/about",

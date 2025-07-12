@@ -57,7 +57,7 @@ const Biodatas = () => {
 
   return (
     <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 font-poppins">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10">
         {/* Filter Section */}
         <aside className="bg-white border border-gray-200 p-6 rounded-xl shadow-md">
           <h3 className="text-xl font-semibold text-[#D33454] mb-4">

@@ -1,0 +1,88 @@
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import React, { useState } from "react";
+import { PulseLoader } from "react-spinners";
+
+const CheckoutForm = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [errorz, setErrorz] = useState(null);
+  const [processing, setProcessing] = useState(false);
+
+  const handleSubmit = async (event) => {
+    setProcessing(true);
+    event.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+    const card = elements.getElement(CardElement);
+
+    if (card == null) {
+      return;
+    }
+
+    // Use your card Element with other Stripe.js APIs
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card,
+    });
+
+    if (error) {
+      console.log("[error]", error);
+      setErrorz(error.message);
+      setProcessing(false);
+    } else {
+      console.log("[PaymentMethod]", paymentMethod);
+      setErrorz(null);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className=" max-w-md w-full mx-auto p-6 bg-white rounded-xl shadow-md space-y-5 border border-gray-200"
+    >
+      <div>
+        <label className="block mb-2 text-sm font-semibold text-gray-700">
+          Card Details
+        </label>
+        <CardElement
+          className="min-w-full bg-[#FFF3F5] p-4 rounded-lg shadow-inner border border-pink-200"
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#424770",
+                fontFamily: "Poppins, sans-serif",
+                "::placeholder": {
+                  color: "#aab7c4",
+                },
+              },
+              invalid: {
+                color: "#e53e3e",
+              },
+            },
+          }}
+        />
+      </div>
+      {errorz && (
+        <div className="text-red-600 text-sm mt-2">
+          <p>{errorz}</p>
+        </div>
+      )}
+      <button
+        type="submit"
+        disabled={!stripe || processing}
+        className="w-full bg-[#D33454] text-white py-2 px-4 rounded-lg text-sm font-semibold shadow hover:bg-[#b92b46] transition duration-200"
+      >
+        {processing ? (
+          <PulseLoader size={10} color="#7dc1b4" />
+        ) : (
+          "Pay $5 and Request Info"
+        )}
+      </button>
+    </form>
+  );
+};
+
+export default CheckoutForm;

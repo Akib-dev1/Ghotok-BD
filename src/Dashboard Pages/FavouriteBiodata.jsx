@@ -55,7 +55,7 @@ const FavouriteBiodata = () => {
   }
 
   return (
-    <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto py-8">
+    <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto py-8">
       <h1 className="text-2xl font-semibold mb-6 text-center">
         My Favourite Biodatas
       </h1>

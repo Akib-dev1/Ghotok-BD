@@ -19,7 +19,7 @@ const Navbar = () => {
   });
   return (
     <nav className="backdrop-blur-lg bg-[#E3D4B4] shadow-md z-50 relative">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto px-4 py-3 flex items-center justify-between">
         <div className="text-2xl font-bold text-blue-600">
           <Link to="/" className="great-vibes text-[#D33454]">
             GhotokBD

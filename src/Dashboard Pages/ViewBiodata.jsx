@@ -67,7 +67,7 @@ const ViewBiodata = () => {
 
   return (
     <section className="min-h-screen bg-[#FFF3F5] py-12">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
         <h2 className="text-4xl font-bold text-[#D33454] mb-10 text-center great-vibes">
           Your Biodata Information
         </h2>
