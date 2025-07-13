@@ -1,25 +1,23 @@
+import { AuthContext } from "@/Contexts/AuthProvidor";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { use } from "react";
 import { ScaleLoader } from "react-spinners";
 import Swal from "sweetalert2";
 
 const MyContactRequest = () => {
-  const [visibleData, setVisibleData] = useState([]);
-
-  const { data, isLoading } = useQuery({
+  const { user } = use(AuthContext);
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["contactRequests"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/biodata/contact");
+      const response = await axios.get(
+        "http://localhost:5000/biodata/contact/requests"
+      );
       return response.data;
     },
   });
 
-  useEffect(() => {
-    if (data) {
-      setVisibleData(data);
-    }
-  }, [data]);
+  const finalData = data?.filter((req) => req.email === user?.email);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -32,7 +30,17 @@ const MyContactRequest = () => {
       confirmButtonText: "Yes, remove it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        setVisibleData((prev) => prev.filter((item) => item.biodataID !== id));
+        axios
+          .delete(`http://localhost:5000/biodata/contact/requests/${id}`)
+          .then((response) => {
+            if (response.data.deletedCount > 0) {
+              Swal.fire({
+                title: "Request Removed!",
+                icon: "success",
+              });
+              refetch();
+            }
+          });
       }
     });
   };
@@ -65,7 +73,7 @@ const MyContactRequest = () => {
               </tr>
             </thead>
             <tbody className="text-gray-700 font-[Poppins]">
-              {visibleData?.map((req, index) => (
+              {finalData?.map((req, index) => (
                 <tr
                   key={index}
                   className="hover:bg-[#fdf1f2] border-b transition"
@@ -99,7 +107,7 @@ const MyContactRequest = () => {
                   </td>
                 </tr>
               ))}
-              {visibleData?.length === 0 && (
+              {finalData?.length === 0 && (
                 <tr>
                   <td colSpan="6" className="py-6 text-gray-500 italic">
                     You have no contact requests yet.

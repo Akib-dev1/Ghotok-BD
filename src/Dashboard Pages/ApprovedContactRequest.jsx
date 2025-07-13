@@ -13,7 +13,8 @@ const ApprovedContactRequest = () => {
     },
   });
 
-  const handleApprove = (id) => {
+  const handleApprove = (id, bioID) => {
+    const query = { id: id, biodataID: bioID };
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -24,7 +25,7 @@ const ApprovedContactRequest = () => {
       confirmButtonText: "Yes, Approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.patch(`http://localhost:5000/biodata/contact/${id}`).then(() => {
+        axios.patch(`http://localhost:5000/biodata/contact`, query).then(() => {
           Swal.fire({
             title: "Request Approved!",
             icon: "success",
@@ -74,7 +75,7 @@ const ApprovedContactRequest = () => {
                         </span>
                       ) : (
                         <button
-                          onClick={() => handleApprove(req._id)}
+                          onClick={() => handleApprove(req._id, req.biodataID)}
                           className="bg-[#D33454] hover:bg-[#b82c46] text-white text-sm px-4 py-2 rounded-lg transition"
                         >
                           Approve

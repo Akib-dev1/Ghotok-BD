@@ -51,7 +51,7 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <BioDataDetails />
           </PrivateRoute>
-        )
+        ),
       },
       {
         path: "/biodatas/checkout/:id",
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
           <PrivateRoute>
             <Checkout />
           </PrivateRoute>
-        )
+        ),
       },
       {
         path: "/about",
