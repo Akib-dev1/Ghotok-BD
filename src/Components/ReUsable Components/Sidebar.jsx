@@ -13,6 +13,7 @@ import {
   FaStar,
   FaCheckCircle,
 } from "react-icons/fa";
+import { GiLovers } from "react-icons/gi";
 import { NavLink } from "react-router";
 import { ScaleLoader } from "react-spinners";
 
@@ -92,17 +93,29 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
             <FaHeart className="text-lg" />
             Favourites Biodata
           </NavLink>
+          <NavLink
+            to="/dashboard/add-success-stories"
+            onClick={onNavigate}
+            className={baseClass}
+          >
+            <GiLovers />
+            Got Married
+          </NavLink>
         </>
       )}
 
       {/* 🛠 Admin Panel */}
       {data?.role === "admin" && (
         <>
-          <NavLink end to="/dashboard" onClick={onNavigate} className={baseClass}>
+          <NavLink
+            end
+            to="/dashboard"
+            onClick={onNavigate}
+            className={baseClass}
+          >
             <FaUserShield className="text-lg" />
             Admin Dashboard
           </NavLink>
-
           <NavLink
             to="/dashboard/manage"
             onClick={onNavigate}
@@ -128,6 +141,14 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
           >
             <FaCheckCircle className="text-lg" />
             Approved Contact Request
+          </NavLink>
+          <NavLink
+            to="/dashboard/success-stories"
+            onClick={onNavigate}
+            className={baseClass}
+          >
+            <GiLovers />
+            Success Stories
           </NavLink>
         </>
       )}

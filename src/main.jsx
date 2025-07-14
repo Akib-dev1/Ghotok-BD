@@ -29,6 +29,8 @@ import AdminRoute from "./PrivateRoutes/AdminRoute";
 import UserRoute from "./PrivateRoutes/UserRoute";
 import BioDataDetails from "./Pages/BioDataDetails";
 import Checkout from "./Pages/Checkout";
+import SuccessStories from "./Dashboard Pages/SuccessStories";
+import AddSuccessStories from "./Dashboard Pages/AddSuccessStories";
 
 const queryClient = new QueryClient();
 
@@ -115,6 +117,26 @@ const router = createBrowserRouter([
             <AdminRoute>
               <ManageUsers />
             </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/success-stories",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <SuccessStories />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/add-success-stories",
+        element: (
+          <PrivateRoute>
+            <UserRoute>
+              <AddSuccessStories />
+            </UserRoute>
           </PrivateRoute>
         ),
       },
