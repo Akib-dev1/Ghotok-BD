@@ -6,31 +6,36 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-const dummyData = [
-  {
-    id: 1,
-    maleId: "B-101",
-    femaleId: "B-202",
-    story:
-      "We are very grateful for this platform. It helped us find each other!",
-  },
-  {
-    id: 2,
-    maleId: "B-115",
-    femaleId: "B-214",
-    story: "Ghotok BD was a blessing for our families. Thank you!",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { ScaleLoader } from "react-spinners";
 
 const SuccessStories = () => {
   const [open, setOpen] = useState(false);
   const [selectedStory, setSelectedStory] = useState(null);
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["successStories"],
+    queryFn: async () => {
+      const response = await axios.get(
+        "http://localhost:5000/biodata/success-stories"
+      );
+      return response.data;
+    },
+  });
+
   const handleOpen = (story) => {
     setSelectedStory(story);
     setOpen(true);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <ScaleLoader barCount={6} color="#ff1d8d" height={50} width={4} />
+      </div>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-[#FFF3F5] py-6 md:py-12">
@@ -49,9 +54,9 @@ const SuccessStories = () => {
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {dummyData.map((story) => (
+              {data?.map((story) => (
                 <tr
-                  key={story.id}
+                  key={story._id}
                   className="border-b hover:bg-pink-50 transition duration-200"
                 >
                   <td className="px-4 py-3">{story.maleId}</td>
@@ -78,7 +83,7 @@ const SuccessStories = () => {
                 Success Story
               </DialogTitle>
             </DialogHeader>
-            <p className="text-gray-700">{selectedStory?.story}</p>
+            <p className="text-gray-700">{selectedStory?.review}</p>
           </DialogContent>
         </Dialog>
       </div>

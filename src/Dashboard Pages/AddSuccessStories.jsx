@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -6,8 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 
 const AddSuccessStories = () => {
+  const [rating, setRating] = useState(0);
   const {
     register,
     handleSubmit,
@@ -25,6 +28,7 @@ const AddSuccessStories = () => {
     );
     const imageURL = imgData.data.data.url;
     data.imageFile = imageURL;
+    data.rating = rating;
     axios
       .post("http://localhost:5000/biodata/success-stories", data)
       .then((res) => {
@@ -34,6 +38,7 @@ const AddSuccessStories = () => {
             icon: "success",
           });
           reset();
+          setRating(0);
         }
       });
   };
@@ -56,24 +61,24 @@ const AddSuccessStories = () => {
         >
           {/* Self Biodata ID */}
           <div className="flex flex-col">
-            <Label className="text-[#D33454] mb-1">Your Biodata ID</Label>
+            <Label className="text-[#D33454] mb-1">Male Biodata ID</Label>
             <Input
-              {...register("selfBiodataId", { required: true })}
+              {...register("maleId", { required: true })}
               placeholder="E.g. B-101"
               className="border border-gray-300"
             />
-            {renderError("selfBiodataId")}
+            {renderError("maleId")}
           </div>
 
           {/* Partner Biodata ID */}
           <div className="flex flex-col">
-            <Label className="text-[#D33454] mb-1">Partner Biodata ID</Label>
+            <Label className="text-[#D33454] mb-1">Female Biodata ID</Label>
             <Input
-              {...register("partnerBiodataId", { required: true })}
+              {...register("femaleId", { required: true })}
               placeholder="E.g. B-202"
               className="border border-gray-300"
             />
-            {renderError("partnerBiodataId")}
+            {renderError("femaleId")}
           </div>
 
           {/* Image Upload - Styled Drop Area */}
@@ -120,6 +125,14 @@ const AddSuccessStories = () => {
               rows={5}
             />
             {renderError("review")}
+          </div>
+
+          <div className="">
+            <Rating
+              style={{ maxWidth: 180 }}
+              value={rating}
+              onChange={setRating}
+            />
           </div>
 
           {/* Submit */}
