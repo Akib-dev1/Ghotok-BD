@@ -1,12 +1,13 @@
+import React, { useContext } from "react";
 import { AuthContext } from "@/Contexts/AuthProvidor";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { use } from "react";
 import { Navigate } from "react-router";
 import { ScaleLoader } from "react-spinners";
 
 const AdminRoute = ({ children }) => {
-  const { user, loading } = use(AuthContext);
+  const { user, loading } = useContext(AuthContext);
+
   const { data, isLoading } = useQuery({
     queryKey: ["admin", user?.email],
     enabled: !!user?.email,
@@ -17,17 +18,21 @@ const AdminRoute = ({ children }) => {
       return response.data;
     },
   });
-  if (loading || isLoading) {
+
+  // Wait until both Firebase auth and DB query finish
+  if (loading || isLoading || !user?.email) {
     return (
       <div className="flex items-center justify-center h-screen">
         <ScaleLoader color="#D33454" />
       </div>
     );
   }
+
   if (data?.role === "admin") {
     return children;
   }
-  return <Navigate to="/unauthorized"></Navigate>;
+
+  return <Navigate to="/unauthorized" />;
 };
 
 export default AdminRoute;

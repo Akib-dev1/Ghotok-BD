@@ -16,21 +16,21 @@ const BioDataDetails = () => {
   const [contactData, setContactData] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:5000/users").then((response) => {
-      setUser(response.data);
+      setUser(response?.data);
     });
     axios.get("http://localhost:5000/biodata/favorite").then((response) => {
-      setFavorite(response.data);
+      setFavorite(response?.data);
     });
     axios.get("http://localhost:5000/biodata/contact").then((response) => {
-      setContactData(response.data);
+      setContactData(response?.data);
     });
-  }, [favorite, contactData]);
+  }, []);
 
   const { data, isLoading } = useQuery({
     queryKey: ["biodatass"],
     queryFn: async () => {
       const response = await axios.get("http://localhost:5000/biodata");
-      return response.data;
+      return response?.data;
     },
   });
 
@@ -42,16 +42,16 @@ const BioDataDetails = () => {
     );
   }
 
-  const biodata = data.find((item) => item.biodataID == id);
+  const biodata = data?.find((item) => item.biodataID == id);
 
-  const userData = user.find((item) => item.email === auth?.user?.email);
+  const userData = user?.find((item) => item.email === auth?.user?.email);
 
-  const favoriteData = favorite.find(
+  const favoriteData = favorite?.find(
     (item) =>
       item.biodataID === biodata?.biodataID && item.email === auth?.user?.email
   );
 
-  const contactDataItem = contactData.find(
+  const contactDataItem = contactData?.find(
     (item) =>
       item.biodataID === biodata?.biodataID && item.email === auth?.user?.email
   );
@@ -66,9 +66,10 @@ const BioDataDetails = () => {
     );
   }
   const isPremium = userData?.isPremium;
+  const isAdmin = userData?.role === "admin";
 
   const similarBiodatas = data
-    .filter(
+    ?.filter(
       (item) =>
         item.type === biodata.type && item.biodataID !== biodata.biodataID
     )
@@ -100,57 +101,58 @@ const BioDataDetails = () => {
         {/* Profile Info */}
         <div className="flex flex-col md:flex-row gap-6 items-center">
           <img
-            src={biodata.profileImage}
-            alt={biodata.name}
+            src={biodata?.profileImage}
+            alt={biodata?.name}
             className="w-40 h-40 rounded-full object-cover border-2 border-[#E3D4B4]"
           />
           <div className="flex-1">
             <h2 className="text-2xl font-bold text-[#D33454]">
-              {biodata.name}
+              {biodata?.name}
             </h2>
             <p className="text-gray-700 mb-2">
-              Biodata ID: {biodata.biodataID}
+              Biodata ID: {biodata?.biodataID}
             </p>
             <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-600">
-              <p>Type: {biodata.type}</p>
-              <p>Age: {biodata.age}</p>
-              <p>Height: {biodata.height}</p>
-              <p>Weight: {biodata.weight}</p>
-              <p>Occupation: {biodata.occupation}</p>
-              <p>Race: {biodata.race}</p>
-              <p>Date of Birth: {biodata.dob}</p>
-              <p>Father's Name: {biodata.father}</p>
-              <p>Mother's Name: {biodata.mother}</p>
-              <p>Present Division: {biodata.presentDivision}</p>
-              <p>Permanent Division: {biodata.permanentDivision}</p>
-              <p>Expected Partner Age: {biodata.partnerAge}</p>
-              <p>Expected Partner Height: {biodata.partnerHeight}</p>
-              <p>Expected Partner Weight: {biodata.partnerWeight}</p>
-              {(isPremium || myBiodata) && (
+              <p>Type: {biodata?.type}</p>
+              <p>Age: {biodata?.age}</p>
+              <p>Height: {biodata?.height}</p>
+              <p>Weight: {biodata?.weight}</p>
+              <p>Occupation: {biodata?.occupation}</p>
+              <p>Race: {biodata?.race}</p>
+              <p>Date of Birth: {biodata?.dob}</p>
+              <p>Father's Name: {biodata?.father}</p>
+              <p>Mother's Name: {biodata?.mother}</p>
+              <p>Present Division: {biodata?.presentDivision}</p>
+              <p>Permanent Division: {biodata?.permanentDivision}</p>
+              <p>Expected Partner Age: {biodata?.partnerAge}</p>
+              <p>Expected Partner Height: {biodata?.partnerHeight}</p>
+              <p>Expected Partner Weight: {biodata?.partnerWeight}</p>
+              {(isPremium || myBiodata || isAdmin) && (
                 <>
-                  <p>Email: {biodata.email}</p>
-                  <p>Mobile: {biodata.mobile}</p>
+                  <p>Email: {biodata?.email}</p>
+                  <p>Mobile: {biodata?.mobile}</p>
                 </>
               )}
             </div>
 
             {/* Action Buttons */}
             <div className="mt-6 flex gap-4">
-              {!favoriteData ? (
-                !myBiodata && (
-                  <Button
-                    className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer"
-                    onClick={handleAddToFavourites}
-                  >
-                    Add to Favourites
+              {isAdmin ||
+                (!favoriteData ? (
+                  !myBiodata && (
+                    <Button
+                      className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer"
+                      onClick={handleAddToFavourites}
+                    >
+                      Add to Favourites
+                    </Button>
+                  )
+                ) : (
+                  <Button className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer">
+                    Added to Favourites
                   </Button>
-                )
-              ) : (
-                <Button className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer">
-                  Added to Favourites
-                </Button>
-              )}
-              {!isPremium && !myBiodata && !contactDataItem && (
+                ))}
+              {!isAdmin && !isPremium && !myBiodata && !contactDataItem && (
                 <Button
                   className={"cursor-pointer"}
                   variant="outline"
@@ -162,7 +164,8 @@ const BioDataDetails = () => {
                 </Button>
               )}
 
-              {!isPremium &&
+              {!isAdmin &&
+                !isPremium &&
                 !myBiodata &&
                 contactDataItem?.status === "pending" && (
                   <Button
@@ -193,7 +196,7 @@ const BioDataDetails = () => {
             Similar {biodata.type} Biodatas
           </h3>
           <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
-            {similarBiodatas.map((user) => (
+            {similarBiodatas?.map((user) => (
               <div
                 key={user._id}
                 className="bg-white p-4 rounded-lg shadow-md border hover:shadow-lg transition"

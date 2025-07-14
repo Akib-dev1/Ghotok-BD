@@ -17,7 +17,7 @@ const UserRoute = ({ children }) => {
     },
   });
 
-  if (loading || isLoading) {
+  if (loading || isLoading || !user?.email) {
     return (
       <div className="flex items-center justify-center h-screen">
         <ScaleLoader color="#D33454" />
@@ -27,9 +27,10 @@ const UserRoute = ({ children }) => {
 
   if (data?.role === "normal") {
     return children;
+  } else if (data?.role) {
+    return <Navigate to="/unauthorized" />;
   }
-
-  return <Navigate to="/unauthorized" />;
+  return null;
 };
 
 export default UserRoute;
