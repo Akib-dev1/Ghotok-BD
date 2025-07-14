@@ -100,7 +100,7 @@ const MyContactRequest = () => {
                   <td className="px-4 py-3">
                     <button
                       onClick={() => handleDelete(req.biodataID)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition"
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition cursor-pointer"
                     >
                       Delete
                     </button>

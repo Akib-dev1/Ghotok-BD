@@ -130,7 +130,7 @@ const CheckoutForm = ({ biodataID, mobile, email, name }) => {
       <button
         type="submit"
         disabled={!stripe || processing}
-        className="w-full bg-[#D33454] text-white py-2 px-4 rounded-lg text-sm font-semibold shadow hover:bg-[#b92b46] transition duration-200"
+        className="w-full bg-[#D33454] text-white py-2 px-4 rounded-lg text-sm font-semibold shadow hover:bg-[#b92b46] transition duration-200 cursor-pointer disabled:cursor-not-allowed"
       >
         {processing ? (
           <PulseLoader size={10} color="#7dc1b4" />

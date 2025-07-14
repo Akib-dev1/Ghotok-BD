@@ -76,7 +76,7 @@ const ApprovedContactRequest = () => {
                       ) : (
                         <button
                           onClick={() => handleApprove(req._id, req.biodataID)}
-                          className="bg-[#D33454] hover:bg-[#b82c46] text-white text-sm px-4 py-2 rounded-lg transition"
+                          className="bg-[#D33454] hover:bg-[#b82c46] text-white text-sm px-4 py-2 rounded-lg transition cursor-pointer"
                         >
                           Approve
                         </button>

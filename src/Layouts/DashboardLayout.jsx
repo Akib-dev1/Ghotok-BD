@@ -20,7 +20,7 @@ const DashboardLayout = () => {
             <FaHome size={20} />
           </Link>
           <button
-            className="text-[#B72B48] hover:text-[#D33454]"
+            className="text-[#B72B48] hover:text-[#D33454] cursor-pointer"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
@@ -36,7 +36,7 @@ const DashboardLayout = () => {
           <Button
             onClick={logout}
             variant="outline"
-            className="w-full cursor-pointer border-[#D33454] text-[#D33454] hover:bg-[#E3D4B4]"
+            className="w-full border-[#D33454] text-[#D33454] hover:bg-[#E3D4B4] cursor-pointer"
           >
             <FaSignOutAlt className="mr-2" />
             Logout

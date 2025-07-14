@@ -6,25 +6,29 @@ import axios from "axios";
 import { Link } from "react-router";
 
 const Biodatas = () => {
-  const { data, isLoading } = useQuery({
-    queryKey: ["biodatas"],
-    queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/biodata");
-      return response.data;
-    },
-  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
 
   const [minAge, setMinAge] = useState("");
   const [maxAge, setMaxAge] = useState("");
   const [biodataType, setBiodataType] = useState("");
   const [division, setDivision] = useState("");
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["biodatas"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:5000/biodata");
+      return res.data;
+    },
+  });
+
   const [filteredData, setFilteredData] = useState([]);
 
+  // Filter the data whenever filters or data change
   useEffect(() => {
     if (data) {
       let filtered = [...data];
 
-      // Apply filters
       if (biodataType) {
         filtered = filtered.filter((item) => item.type === biodataType);
       }
@@ -44,8 +48,13 @@ const Biodatas = () => {
       }
 
       setFilteredData(filtered);
+      setCurrentPage(1); // Reset to page 1 when filters change
     }
   }, [data, minAge, maxAge, biodataType, division]);
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const currentItems = filteredData.slice(startIndex, startIndex + pageSize);
+  const totalPages = Math.ceil(filteredData.length / pageSize);
 
   if (isLoading) {
     return (
@@ -56,7 +65,7 @@ const Biodatas = () => {
   }
 
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 font-poppins">
+    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 flex flex-col justify-between">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10">
         {/* Filter Section */}
         <aside className="bg-white border border-gray-200 p-6 rounded-xl shadow-md">
@@ -128,8 +137,8 @@ const Biodatas = () => {
 
         {/* Biodata Display Section */}
         <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredData.length > 0 ? (
-            filteredData.map((user, index) => (
+          {currentItems.length > 0 ? (
+            currentItems.map((user, index) => (
               <div
                 key={index}
                 className="bg-white border border-gray-200 rounded-xl p-6 shadow-md flex flex-col items-center hover:shadow-lg transition"
@@ -168,7 +177,7 @@ const Biodatas = () => {
                   </p>
                 </div>
                 <Link to={`/biodatas/${user.biodataID}`}>
-                  <Button className="bg-[#D33454] hover:bg-[#b72b48] text-white text-sm w-full">
+                  <Button className="bg-[#D33454] hover:bg-[#b72b48] text-white text-sm w-full cursor-pointer">
                     View Profile
                   </Button>
                 </Link>
@@ -180,6 +189,23 @@ const Biodatas = () => {
             </p>
           )}
         </div>
+      </div>
+
+      {/* Pagination */}
+      <div className="mt-6 flex justify-center">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`mx-1 px-3 py-1 border rounded-md transition ${
+              currentPage === page
+                ? "bg-[#D33454] text-white border-[#D33454]"
+                : "bg-white text-gray-700 border-gray-300 hover:bg-[#b72b48] hover:text-white"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
       </div>
     </section>
   );

@@ -84,7 +84,7 @@ const FavouriteBiodata = () => {
                   <td className="px-4 py-3 flex justify-center">
                     <button
                       onClick={() => handleDelete(item._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs flex items-center justify-center gap-2 transition"
+                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs flex items-center cursor-pointer justify-center gap-2 transition"
                     >
                       <FaTrashAlt className="text-white text-sm" />
                       Delete

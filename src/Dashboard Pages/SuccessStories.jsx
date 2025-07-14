@@ -63,7 +63,7 @@ const SuccessStories = () => {
                   <td className="px-4 py-3">{story.femaleId}</td>
                   <td className="px-4 py-3 text-center">
                     <Button
-                      className="bg-[#D33454] hover:bg-[#b72b48] text-white px-4 py-2 rounded-md"
+                      className="bg-[#D33454] hover:bg-[#b72b48] text-white px-4 py-2 rounded-md cursor-pointer"
                       onClick={() => handleOpen(story)}
                     >
                       View Story

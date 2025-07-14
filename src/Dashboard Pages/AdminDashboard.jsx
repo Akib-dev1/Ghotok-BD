@@ -4,8 +4,6 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-const revenueData = [{ name: "Revenue Generated", value: 8000 }];
-
 const renderValueLabel = ({
   cx,
   cy,
@@ -36,12 +34,20 @@ const renderValueLabel = ({
 export default function AdminDashboard() {
   const [biodata, setBiodata] = useState([]);
   const [users, setUsers] = useState([]);
+  const [revenue, setRevenue] = useState(0);
   useEffect(() => {
     axios.get("http://localhost:5000/biodata").then((response) => {
       setBiodata(response.data);
     });
     axios.get("http://localhost:5000/users").then((response) => {
       setUsers(response.data);
+    });
+    axios.get("http://localhost:5000/biodata/contact").then((response) => {
+      let total = 0;
+      response.data.forEach((item) => {
+        total += item.amount;
+      });
+      setRevenue(total);
     });
   }, []);
   const dataBio = [
@@ -59,6 +65,8 @@ export default function AdminDashboard() {
       value: users.filter((item) => item.isPremium === true).length,
     },
   ];
+
+  const revenueData = [{ name: "Revenue Generated", value: revenue }];
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="bg-white rounded-xl shadow-lg w-full max-w-7xl p-6">
@@ -90,8 +98,8 @@ export default function AdminDashboard() {
             </ResponsiveContainer>
           </div>
 
-          <div className="h-96">
-            <h2 className="text-center font-semibold mb-4">Revenue Stats</h2>
+          <div className="h-80">
+            <h2 className="text-center font-semibold">Revenue Stats</h2>
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie

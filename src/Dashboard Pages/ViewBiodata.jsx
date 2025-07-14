@@ -155,7 +155,7 @@ const ViewBiodata = () => {
             {!done ? (
               <Button
                 onClick={() => setOpen(true)}
-                className="bg-[#D33454] hover:bg-[#b72b48] text-white text-lg px-6 py-3 rounded-md"
+                className="bg-[#D33454] hover:bg-[#b72b48] text-white text-lg px-6 py-3 rounded-md cursor-pointer duration-200"
               >
                 Make Biodata Premium
               </Button>
@@ -182,12 +182,12 @@ const ViewBiodata = () => {
               <Button
                 onClick={() => setOpen(false)}
                 variant="outline"
-                className="border-[#D33454] text-[#D33454]"
+                className="border-[#D33454] text-[#D33454] cursor-pointer hover:bg-[#fdf1f2]"
               >
                 Cancel
               </Button>
               <Button
-                className="bg-[#D33454] text-white hover:bg-[#b72b48]"
+                className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer"
                 onClick={handleReqPremium}
               >
                 Yes, Make Premium

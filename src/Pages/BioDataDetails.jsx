@@ -139,19 +139,20 @@ const BioDataDetails = () => {
               {!favoriteData ? (
                 !myBiodata && (
                   <Button
-                    className="bg-[#D33454] text-white hover:bg-[#b72b48]"
+                    className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer"
                     onClick={handleAddToFavourites}
                   >
                     Add to Favourites
                   </Button>
                 )
               ) : (
-                <Button className="bg-[#D33454] text-white hover:bg-[#b72b48]">
+                <Button className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer">
                   Added to Favourites
                 </Button>
               )}
               {!isPremium && !myBiodata && !contactDataItem && (
                 <Button
+                  className={"cursor-pointer"}
                   variant="outline"
                   onClick={() =>
                     navigate(`/biodatas/checkout/${biodata.biodataID}`)
@@ -209,7 +210,7 @@ const BioDataDetails = () => {
                   <p>Occupation: {user.occupation}</p>
                   <Button
                     onClick={() => navigate(`/biodatas/${user.biodataID}`)}
-                    className="mt-3 w-full bg-[#D33454] hover:bg-[#b72b48] text-white text-sm"
+                    className="mt-3 w-full bg-[#D33454] hover:bg-[#b72b48] text-white text-sm cursor-pointer"
                   >
                     View Profile
                   </Button>

@@ -139,7 +139,7 @@ const AddSuccessStories = () => {
           <div className="md:col-span-2 text-right">
             <Button
               type="submit"
-              className="bg-[#D33454] hover:bg-[#b72b48] text-white max-lg:w-full text-lg px-6 py-3 rounded-md"
+              className="bg-[#D33454] hover:bg-[#b72b48] text-white max-lg:w-full text-lg px-6 py-3 rounded-md cursor-pointer duration-200"
             >
               Submit Success Story
             </Button>
