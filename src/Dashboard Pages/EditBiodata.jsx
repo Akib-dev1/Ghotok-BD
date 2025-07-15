@@ -270,7 +270,7 @@ const EditBiodata = () => {
             >
               <option value="">Select Division</option>
               <option value="Dhaka">Dhaka</option>
-              <option value="Chattagra">Chattagra</option>
+              <option value="Chattagram">Chattagram</option>
               <option value="Rangpur">Rangpur</option>
               <option value="Barisal">Barisal</option>
               <option value="Khulna">Khulna</option>
