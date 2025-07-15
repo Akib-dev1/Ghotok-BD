@@ -129,13 +129,7 @@ const Signup = () => {
                   type="email"
                   placeholder="you@example.com"
                   className="focus-visible:ring-[#D33454] border-gray-300"
-                  {...register("email", {
-                    required: "Email is required",
-                    pattern: {
-                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                      message: "Invalid email address",
-                    },
-                  })}
+                  {...register("email")}
                 />
               </div>
 
