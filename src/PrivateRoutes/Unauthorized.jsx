@@ -3,7 +3,7 @@ import forbidden from "../assets/Forbidden.png";
 
 const Unauthorized = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#FFF3F5] font-poppins">
+    <div className="min-h-screen flex items-center justify-center bg-[#FFF3F5] ">
       <div className="flex flex-col gap-6 items-center">
         <div className="max-w-4xl p-6">
           <img src={forbidden} alt="" className="rounded-2xl" />

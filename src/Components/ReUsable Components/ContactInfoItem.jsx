@@ -12,7 +12,7 @@ const ContactInfoItem = ({ icon, label, value, href }) => {
         {icon}
         <div>
           <p className="text-sm font-semibold">{label}</p>
-          <p className="text-lg max-sm:text-sm font-poppins">{value}</p>
+          <p className="text-lg max-sm:text-sm ">{value}</p>
         </div>
       </div>
     </a>

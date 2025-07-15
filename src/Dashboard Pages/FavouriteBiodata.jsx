@@ -54,7 +54,7 @@ const FavouriteBiodata = () => {
   }
 
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 font-poppins">
+    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 ">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
         <h1 className="text-3xl font-bold mb-8 text-center text-[#D33454]">
           My Favourite Biodatas

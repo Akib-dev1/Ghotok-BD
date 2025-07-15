@@ -96,7 +96,7 @@ const BioDataDetails = () => {
   };
 
   return (
-    <section className="min-h-screen py-10 px-4 font-poppins bg-[#FFF3F5]">
+    <section className="min-h-screen py-10 px-4  bg-[#FFF3F5]">
       <div className="max-w-4xl mx-auto bg-white rounded-xl p-6 shadow-lg border">
         {/* Profile Info */}
         <div className="flex flex-col md:flex-row gap-6 items-center">

@@ -16,7 +16,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-16 px-4 font-poppins flex items-center justify-center">
+    <section className="min-h-screen bg-[#FFF3F5] py-16 px-4  flex items-center justify-center">
       <div className="w-full max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-lg border border-gray-200 p-8 flex flex-col lg:flex-row gap-12 lg:gap-16">
         <div className="flex flex-col flex-grow min-w-0">
           <h1 className="text-4xl sm:text-5xl font-bold text-[#D33454] great-vibes mb-4 sm:mb-6">

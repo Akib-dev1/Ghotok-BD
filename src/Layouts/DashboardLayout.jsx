@@ -10,7 +10,7 @@ const DashboardLayout = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#FFF3F5] flex flex-col lg:flex-row font-poppins">
+    <div className="min-h-screen bg-[#FFF3F5] flex flex-col lg:flex-row ">
       <div className="lg:hidden w-full bg-white shadow px-4 py-3 flex justify-between items-center z-50">
         <Link to="/" className="text-2xl text-[#D33454] font-bold great-vibes">
           GhotokBD
