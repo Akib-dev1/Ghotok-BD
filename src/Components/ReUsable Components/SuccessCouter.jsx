@@ -9,7 +9,7 @@ const SuccessCounter = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["biodatas"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/biodata");
+      const response = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata");
       return response.data;
     },
   });
@@ -17,7 +17,7 @@ const SuccessCounter = () => {
     queryKey: ["marriages"],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:5000/biodata/success-stories"
+        "https://b11a12-server-side-akib-dev1.vercel.app/biodata/success-stories"
       );
       return response.data;
     },

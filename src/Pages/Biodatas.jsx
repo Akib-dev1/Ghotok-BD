@@ -17,7 +17,7 @@ const Biodatas = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["biodatas"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/biodata");
+      const res = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata");
       return res.data;
     },
   });

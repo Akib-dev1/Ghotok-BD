@@ -11,7 +11,7 @@ const MyContactRequest = () => {
     queryKey: ["contactRequests"],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:5000/biodata/contact/requests"
+        "https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact/requests"
       );
       return response.data;
     },
@@ -31,7 +31,7 @@ const MyContactRequest = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/biodata/contact/requests/${id}`)
+          .delete(`https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact/requests/${id}`)
           .then((response) => {
             if (response.data.deletedCount > 0) {
               Swal.fire({

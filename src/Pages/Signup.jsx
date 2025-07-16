@@ -42,7 +42,7 @@ const Signup = () => {
           isPremium: false,
           createdAt: new Date().toISOString(),
         };
-        axios.post("http://localhost:5000/users", userData);
+        axios.post("https://b11a12-server-side-akib-dev1.vercel.app/users", userData);
         navigate(state ? state : "/");
       })
       .catch((error) => {
@@ -73,7 +73,7 @@ const Signup = () => {
               isPremium: false,
               createdAt: new Date().toISOString(),
             };
-            axios.post("http://localhost:5000/users", userData);
+            axios.post("https://b11a12-server-side-akib-dev1.vercel.app/users", userData);
             reset();
             navigate(state ? state : "/");
           })

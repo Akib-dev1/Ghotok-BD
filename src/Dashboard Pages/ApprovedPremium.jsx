@@ -9,7 +9,7 @@ const ApprovedPremium = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["premiumRequests"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/users/premium");
+      const response = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/users/premium");
       return response.data;
     },
   });
@@ -26,7 +26,7 @@ const ApprovedPremium = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.patch(
-          `http://localhost:5000/users/${email}`,
+          `https://b11a12-server-side-akib-dev1.vercel.app/users/${email}`,
           { isPremium: true }
         );
         if (response.data.modifiedCount > 0) {

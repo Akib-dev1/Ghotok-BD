@@ -9,7 +9,7 @@ const ManageUsers = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/users");
       return res.data;
     },
   });
@@ -26,7 +26,7 @@ const ManageUsers = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.patch(
-          `http://localhost:5000/users/${userEmail}`,
+          `https://b11a12-server-side-akib-dev1.vercel.app/users/${userEmail}`,
           { role: "admin" }
         );
         if (response.data.modifiedCount > 0) {
@@ -52,7 +52,7 @@ const ManageUsers = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.patch(
-          `http://localhost:5000/users/${userEmail}`,
+          `https://b11a12-server-side-akib-dev1.vercel.app/users/${userEmail}`,
           { isPremium: true }
         );
         if (response.data.modifiedCount > 0) {

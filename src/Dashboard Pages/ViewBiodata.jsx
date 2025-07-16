@@ -17,12 +17,13 @@ import Swal from "sweetalert2";
 const ViewBiodata = () => {
   const [open, setOpen] = useState(false);
   const [done, setDone] = useState(false);
+  const [userData, setUserData] = useState(null);
   const { user } = use(AuthContext);
   const { data, isLoading } = useQuery({
     queryKey: ["biodata", user?.email],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/biodata/${user?.email}`
+        `https://b11a12-server-side-akib-dev1.vercel.app/biodata/${user?.email}`
       );
       return response.data;
     },
@@ -30,19 +31,31 @@ const ViewBiodata = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/users/premium/${user?.email}`)
+      .get(
+        `https://b11a12-server-side-akib-dev1.vercel.app/users/premium/${user?.email}`
+      )
       .then((res) => {
         setDone(res.data?.isHandled);
+      });
+    axios
+      .get(
+        `https://b11a12-server-side-akib-dev1.vercel.app/users/${user?.email}`
+      )
+      .then((res) => {
+        setUserData(res.data);
       });
   }, [user?.email]);
 
   const handleReqPremium = async () => {
     setOpen(false);
     const { data } = await axios.get(
-      `http://localhost:5000/users/${user?.email}`
+      `https://b11a12-server-side-akib-dev1.vercel.app/users/${user?.email}`
     );
     try {
-      await axios.post("http://localhost:5000/users/premium", data);
+      await axios.post(
+        "https://b11a12-server-side-akib-dev1.vercel.app/users/premium",
+        data
+      );
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -152,7 +165,7 @@ const ViewBiodata = () => {
               alt="Profile"
               className="rounded-xl shadow-lg w-full max-w-xs mb-6 border border-gray-200"
             />
-            {!done ? (
+            {!done && !userData.isPremium ? (
               <Button
                 onClick={() => setOpen(true)}
                 className="bg-[#D33454] hover:bg-[#b72b48] text-white text-lg px-6 py-3 rounded-md cursor-pointer duration-200"

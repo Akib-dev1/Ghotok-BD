@@ -12,7 +12,7 @@ const FavouriteBiodata = () => {
     queryKey: ["Favourite Biodata"],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:5000/biodata/favorite"
+        "https://b11a12-server-side-akib-dev1.vercel.app/biodata/favorite"
       );
       return response.data;
     },
@@ -32,7 +32,7 @@ const FavouriteBiodata = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await axios.delete(
-          `http://localhost:5000/biodata/favorite/${id}`
+          `https://b11a12-server-side-akib-dev1.vercel.app/biodata/favorite/${id}`
         );
         if (response.data.deletedCount > 0) {
           Swal.fire({

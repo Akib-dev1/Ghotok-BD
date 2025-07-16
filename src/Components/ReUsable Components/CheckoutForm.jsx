@@ -17,7 +17,7 @@ const CheckoutForm = ({ biodataID, mobile, email, name }) => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/create-payment-intent", {
+      .post("https://b11a12-server-side-akib-dev1.vercel.app/create-payment-intent", {
         amount: 5,
       })
       .then((response) => {
@@ -78,7 +78,7 @@ const CheckoutForm = ({ biodataID, mobile, email, name }) => {
           status: "pending",
         };
         axios
-          .post("http://localhost:5000/biodata/contact", paymentData)
+          .post("https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact", paymentData)
           .then(() => {
             Swal.fire({
               title: "Payment successful!",

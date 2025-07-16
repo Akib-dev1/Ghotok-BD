@@ -8,7 +8,7 @@ const ApprovedContactRequest = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["contactRequests"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/biodata/contact");
+      const response = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact");
       return response.data;
     },
   });
@@ -25,7 +25,7 @@ const ApprovedContactRequest = () => {
       confirmButtonText: "Yes, Approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.patch(`http://localhost:5000/biodata/contact`, query).then(() => {
+        axios.patch(`https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact`, query).then(() => {
           Swal.fire({
             title: "Request Approved!",
             icon: "success",

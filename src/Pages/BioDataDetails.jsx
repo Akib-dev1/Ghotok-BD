@@ -15,13 +15,13 @@ const BioDataDetails = () => {
   const [favorite, setFavorite] = useState([]);
   const [contactData, setContactData] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/users").then((response) => {
+    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/users").then((response) => {
       setUser(response?.data);
     });
-    axios.get("http://localhost:5000/biodata/favorite").then((response) => {
+    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata/favorite").then((response) => {
       setFavorite(response?.data);
     });
-    axios.get("http://localhost:5000/biodata/contact").then((response) => {
+    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact").then((response) => {
       setContactData(response?.data);
     });
   }, []);
@@ -29,7 +29,7 @@ const BioDataDetails = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["biodatass"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/biodata");
+      const response = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata");
       return response?.data;
     },
   });
@@ -84,7 +84,7 @@ const BioDataDetails = () => {
       occupation: biodata.occupation,
     };
     const { data } = await axios.post(
-      "http://localhost:5000/biodata/favorite",
+      "https://b11a12-server-side-akib-dev1.vercel.app/biodata/favorite",
       profileData
     );
     if (data.insertedId) {

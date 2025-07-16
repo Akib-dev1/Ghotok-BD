@@ -18,7 +18,7 @@ const SuccessStories = () => {
     queryKey: ["successStories"],
     queryFn: async () => {
       const response = await axios.get(
-        "http://localhost:5000/biodata/success-stories"
+        "https://b11a12-server-side-akib-dev1.vercel.app/biodata/success-stories"
       );
       return response.data;
     },

@@ -17,7 +17,7 @@ const EditBiodata = () => {
     queryKey: ["biodata", user?.email],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/biodata/${user?.email}`
+        `https://b11a12-server-side-akib-dev1.vercel.app/biodata/${user?.email}`
       );
       return response.data;
     },
@@ -42,7 +42,7 @@ const EditBiodata = () => {
       ...data,
       profileImage: imageURL,
     };
-    const response = await axios.put("http://localhost:5000/biodata", biodata);
+    const response = await axios.put("https://b11a12-server-side-akib-dev1.vercel.app/biodata", biodata);
     if (response.data.upsertedCount > 0) {
       refetch();
       Swal.fire({

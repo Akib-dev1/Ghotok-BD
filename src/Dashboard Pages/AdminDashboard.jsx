@@ -36,13 +36,13 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [revenue, setRevenue] = useState(0);
   useEffect(() => {
-    axios.get("http://localhost:5000/biodata").then((response) => {
+    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata").then((response) => {
       setBiodata(response.data);
     });
-    axios.get("http://localhost:5000/users").then((response) => {
+    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/users").then((response) => {
       setUsers(response.data);
     });
-    axios.get("http://localhost:5000/biodata/contact").then((response) => {
+    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact").then((response) => {
       let total = 0;
       response.data.forEach((item) => {
         total += item.amount;

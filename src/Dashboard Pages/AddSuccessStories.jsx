@@ -30,7 +30,7 @@ const AddSuccessStories = () => {
     data.imageFile = imageURL;
     data.rating = rating;
     axios
-      .post("http://localhost:5000/biodata/success-stories", data)
+      .post("https://b11a12-server-side-akib-dev1.vercel.app/biodata/success-stories", data)
       .then((res) => {
         if (res.data.insertedId) {
           Swal.fire({

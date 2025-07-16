@@ -13,7 +13,7 @@ const AdminRoute = ({ children }) => {
     enabled: !!user?.email,
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/users/${user?.email}`
+        `https://b11a12-server-side-akib-dev1.vercel.app/users/${user?.email}`
       );
       return response.data;
     },
