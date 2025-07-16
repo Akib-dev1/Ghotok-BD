@@ -59,7 +59,7 @@ const AddSuccessStories = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {/* Self Biodata ID */}
+          {/* Male Biodata ID */}
           <div className="flex flex-col">
             <Label className="text-[#D33454] mb-1">Male Biodata ID</Label>
             <Input
@@ -70,7 +70,7 @@ const AddSuccessStories = () => {
             {renderError("maleId")}
           </div>
 
-          {/* Partner Biodata ID */}
+          {/* Female Biodata ID */}
           <div className="flex flex-col">
             <Label className="text-[#D33454] mb-1">Female Biodata ID</Label>
             <Input
@@ -81,10 +81,20 @@ const AddSuccessStories = () => {
             {renderError("femaleId")}
           </div>
 
-          {/* Image Upload - Styled Drop Area */}
+          {/* ✅ Marriage Date */}
+          <div className="flex flex-col">
+            <Label className="text-[#D33454] mb-1">Marriage Date</Label>
+            <Input
+              type="date"
+              {...register("marriageDate", { required: true })}
+              className="border border-gray-300"
+            />
+            {renderError("marriageDate")}
+          </div>
+
+          {/* Image Upload */}
           <div className="flex flex-col md:col-span-2">
             <Label className="text-[#D33454] mb-1">Couple Image</Label>
-
             <label
               htmlFor="imageFile"
               className="flex flex-col items-center justify-center gap-2 px-6 py-10 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer text-gray-500 hover:border-[#D33454] hover:bg-pink-50 transition"
@@ -104,7 +114,6 @@ const AddSuccessStories = () => {
               </svg>
               <span>Click to select image</span>
             </label>
-
             <Input
               type="file"
               id="imageFile"
@@ -127,7 +136,8 @@ const AddSuccessStories = () => {
             {renderError("review")}
           </div>
 
-          <div className="">
+          {/* Rating */}
+          <div>
             <Rating
               style={{ maxWidth: 180 }}
               value={rating}
@@ -135,7 +145,7 @@ const AddSuccessStories = () => {
             />
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <div className="md:col-span-2 text-right">
             <Button
               type="submit"
