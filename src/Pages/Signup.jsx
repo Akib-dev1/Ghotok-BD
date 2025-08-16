@@ -42,7 +42,10 @@ const Signup = () => {
           isPremium: false,
           createdAt: new Date().toISOString(),
         };
-        axios.post("https://b11a12-server-side-akib-dev1.vercel.app/users", userData);
+        axios.post(
+          "https://b11a12-server-side-akib-dev1.vercel.app/users",
+          userData
+        );
         navigate(state ? state : "/");
       })
       .catch((error) => {
@@ -73,7 +76,10 @@ const Signup = () => {
               isPremium: false,
               createdAt: new Date().toISOString(),
             };
-            axios.post("https://b11a12-server-side-akib-dev1.vercel.app/users", userData);
+            axios.post(
+              "https://b11a12-server-side-akib-dev1.vercel.app/users",
+              userData
+            );
             reset();
             navigate(state ? state : "/");
           })
@@ -87,18 +93,18 @@ const Signup = () => {
   };
   return (
     <>
-      <Card className="w-full max-w-md shadow-xl border border-gray-200 bg-white">
+      <Card className="w-full max-w-md shadow-xl border border-gray-200 bg-white dark:bg-[#1F1F1F] dark:border-gray-700">
         <CardHeader>
-          <CardTitle className="text-[#D33454] text-2xl font-bold">
+          <CardTitle className="text-[#D33454] dark:text-[#D33454] text-2xl font-bold">
             Create an account
           </CardTitle>
-          <CardDescription className="text-sm text-muted-foreground leading-relaxed max-w-full">
+          <CardDescription className="text-sm text-muted-foreground dark:text-gray-300 leading-relaxed max-w-full">
             Enter your details below to create your account
           </CardDescription>
           <CardAction>
             <Button
               variant="link"
-              className="text-[#D33454] cursor-pointer hover:underline text-sm"
+              className="text-[#D33454] dark:text-[#D33454] cursor-pointer hover:underline text-sm"
             >
               <Link to="/login">Login</Link>
             </Button>
@@ -108,40 +114,49 @@ const Signup = () => {
           <CardContent>
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="name" className="text-[#D33454]">
+                <Label
+                  htmlFor="name"
+                  className="text-[#D33454] dark:text-[#D33454]"
+                >
                   Full Name
                 </Label>
                 <Input
                   id="name"
                   type="text"
                   placeholder="John Doe"
-                  className="focus-visible:ring-[#D33454] border-gray-300"
+                  className="focus-visible:ring-[#D33454] border-gray-300 dark:border-gray-600 dark:bg-[#2A2A2A] dark:text-gray-200"
                   {...register("name", { required: "Name is required" })}
                 />
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="email" className="text-[#D33454]">
+                <Label
+                  htmlFor="email"
+                  className="text-[#D33454] dark:text-[#D33454]"
+                >
                   Email
                 </Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="you@example.com"
-                  className="focus-visible:ring-[#D33454] border-gray-300"
+                  className="focus-visible:ring-[#D33454] border-gray-300 dark:border-gray-600 dark:bg-[#2A2A2A] dark:text-gray-200"
                   {...register("email")}
                 />
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="password" className="text-[#D33454]">
+                <Label
+                  htmlFor="password"
+                  className="text-[#D33454] dark:text-[#D33454]"
+                >
                   Password
                 </Label>
                 <Input
                   id="password"
                   type="password"
                   placeholder="••••••"
-                  className="focus-visible:ring-[#D33454] border-gray-300"
+                  className="focus-visible:ring-[#D33454] border-gray-300 dark:border-gray-600 dark:bg-[#2A2A2A] dark:text-gray-200"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
@@ -166,10 +181,13 @@ const Signup = () => {
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="photo" className="text-[#D33454]">
+                <Label
+                  htmlFor="photo"
+                  className="text-[#D33454] dark:text-[#D33454]"
+                >
                   Profile Image
                 </Label>
-                <div className="w-full border border-dashed border-[#D33454] rounded-md p-4 flex flex-col items-center justify-center text-center text-sm text-[#D33454] cursor-pointer hover:bg-[#fef1f3] transition">
+                <div className="w-full border border-dashed border-[#D33454] dark:border-[#b72b48] rounded-md p-4 flex flex-col items-center justify-center text-center text-sm text-[#D33454] dark:text-[#b72b48] cursor-pointer hover:bg-[#fef1f3] dark:hover:bg-[#2E2E2E] transition">
                   <Input
                     id="photo"
                     type="file"
@@ -188,30 +206,30 @@ const Signup = () => {
           </CardContent>
 
           {errors.password && (
-            <p className="text-red-500 text-center mt-2">
+            <p className="text-red-500 dark:text-red-400 text-center mt-2">
               {errors.password.message}
             </p>
           )}
-
           {errors.photo && (
-            <p className="text-red-500 text-center mt-2">
+            <p className="text-red-500 dark:text-red-400 text-center mt-2">
               {errors.photo.message}
             </p>
           )}
-
           {errors.email && (
-            <p className="text-red-500 text-center mt-2">
+            <p className="text-red-500 dark:text-red-400 text-center mt-2">
               {errors.email.message}
             </p>
           )}
-
           {errors.name && (
-            <p className="text-red-500 text-center mt-2">
+            <p className="text-red-500 dark:text-red-400 text-center mt-2">
               {errors.name.message}
             </p>
           )}
-
-          {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+          {error && (
+            <p className="text-red-500 dark:text-red-400 text-center mt-2">
+              {error}
+            </p>
+          )}
 
           <CardFooter className="flex-col gap-2 mt-4">
             <Button
@@ -224,7 +242,7 @@ const Signup = () => {
               onClick={handleGoogleLogin}
               type="button"
               variant="outline"
-              className="w-full text-[#D33454] border-[#D33454] hover:bg-[#E3D4B4] cursor-pointer"
+              className="w-full text-[#D33454] border-[#D33454] hover:bg-[#E3D4B4] dark:text-[#D33454] dark:border-[#D33454] dark:hover:bg-[#3A3A3A] cursor-pointer flex items-center justify-center gap-2"
             >
               <FaGoogle />
               Sign Up with Google
