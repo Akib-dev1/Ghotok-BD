@@ -16,7 +16,9 @@ const Checkout = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["biodata"],
     queryFn: async () => {
-      const response = await axios.get(`https://b11a12-server-side-akib-dev1.vercel.app/biodata`);
+      const response = await axios.get(
+        `https://b11a12-server-side-akib-dev1.vercel.app/biodata`
+      );
       return response.data;
     },
   });
@@ -36,20 +38,22 @@ const Checkout = () => {
     );
   }
   return (
-    <section className="bg-[#FFF3F5] min-h-screen py-10">
+    <section className="bg-[#FFF3F5] dark:bg-[#121212] min-h-screen py-10 transition-colors duration-500 ease-in-out">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto">
-        <div className="bg-white p-8 rounded-xl shadow-lg border border-pink-100">
-          <h1 className="text-3xl font-bold text-center text-[#D33454] mb-4">
+        <div className="bg-white dark:bg-[#1E1E1E] p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 transition-colors duration-500 ease-in-out">
+          {/* Header */}
+          <h1 className="text-3xl font-bold text-center text-[#D33454] dark:text-[#FF5C7A] mb-4 great-vibes transition-colors duration-500 ease-in-out">
             Checkout for Biodata ID:{" "}
-            <span className="font-semibold text-gray-700">
+            <span className="font-semibold text-gray-700 dark:text-gray-300">
               {biodata?.biodataID}
             </span>
           </h1>
 
-          <h2 className="text-xl text-center text-gray-700 mb-6">
+          <h2 className="text-xl text-center text-gray-700 dark:text-gray-300 mb-6 prociono transition-colors duration-500 ease-in-out">
             Your Email: <span className="font-semibold">{user.email}</span>
           </h2>
 
+          {/* Stripe Checkout Form */}
           <div className="flex justify-center">
             <Elements stripe={stripePromise}>
               <CheckoutForm
@@ -60,9 +64,11 @@ const Checkout = () => {
               />
             </Elements>
           </div>
+
+          {/* Back Button */}
           <Link
             to={`/biodatas/${param.id}`}
-            className="mt-6 inline-block text-center text-sm text-[#D33454] px-3 py-2 rounded-lg border border-[#D33454] hover:bg-[#D33454] hover:text-white transition duration-200"
+            className="mt-6 inline-block text-center text-sm text-[#D33454] dark:text-[#FF5C7A] px-4 py-2 rounded-xl border border-[#D33454] dark:border-[#FF5C7A] hover:bg-gradient-to-r hover:from-[#D33454] hover:to-[#B72B48] dark:hover:from-[#FF5C7A] dark:hover:to-[#FF7A92] hover:text-white transition-all duration-300"
           >
             Back to Biodata
           </Link>

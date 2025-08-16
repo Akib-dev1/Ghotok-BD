@@ -15,21 +15,29 @@ const BioDataDetails = () => {
   const [favorite, setFavorite] = useState([]);
   const [contactData, setContactData] = useState([]);
   useEffect(() => {
-    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/users").then((response) => {
-      setUser(response?.data);
-    });
-    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata/favorite").then((response) => {
-      setFavorite(response?.data);
-    });
-    axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact").then((response) => {
-      setContactData(response?.data);
-    });
+    axios
+      .get("https://b11a12-server-side-akib-dev1.vercel.app/users")
+      .then((response) => {
+        setUser(response?.data);
+      });
+    axios
+      .get("https://b11a12-server-side-akib-dev1.vercel.app/biodata/favorite")
+      .then((response) => {
+        setFavorite(response?.data);
+      });
+    axios
+      .get("https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact")
+      .then((response) => {
+        setContactData(response?.data);
+      });
   }, []);
 
   const { data, isLoading } = useQuery({
     queryKey: ["biodatass"],
     queryFn: async () => {
-      const response = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata");
+      const response = await axios.get(
+        "https://b11a12-server-side-akib-dev1.vercel.app/biodata"
+      );
       return response?.data;
     },
   });
@@ -96,23 +104,23 @@ const BioDataDetails = () => {
   };
 
   return (
-    <section className="min-h-screen py-10 px-4  bg-[#FFF3F5]">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl p-6 shadow-lg border">
+    <section className="min-h-screen py-10 px-4 bg-white dark:bg-[#121212] text-gray-900 dark:text-gray-100 transition-colors duration-500 ease-in-out">
+      <div className="max-w-4xl mx-auto bg-white dark:bg-[#1E1E1E] rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 transition-colors duration-500 ease-in-out">
         {/* Profile Info */}
         <div className="flex flex-col md:flex-row gap-6 items-center">
           <img
             src={biodata?.profileImage}
             alt={biodata?.name}
-            className="w-40 h-40 rounded-full object-cover border-2 border-[#E3D4B4]"
+            className="w-40 h-40 rounded-full object-cover border-2 border-[#E3D4B4] dark:border-[#3A3A3A] transition-colors duration-500 ease-in-out"
           />
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-[#D33454]">
+            <h2 className="text-2xl font-bold text-[#D33454] dark:text-[#FF5C7A] transition-colors duration-500 ease-in-out">
               {biodata?.name}
             </h2>
-            <p className="text-gray-700 mb-2">
+            <p className="text-gray-700 dark:text-gray-300 mb-2 transition-colors duration-500 ease-in-out">
               Biodata ID: {biodata?.biodataID}
             </p>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-600">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-600 dark:text-gray-300 transition-colors duration-500 ease-in-out">
               <p>Type: {biodata?.type}</p>
               <p>Age: {biodata?.age}</p>
               <p>Height: {biodata?.height}</p>
@@ -136,26 +144,26 @@ const BioDataDetails = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-6 flex gap-4">
+            <div className="mt-6 flex flex-wrap gap-4">
               {isAdmin ||
                 (!favoriteData ? (
                   !myBiodata && (
                     <Button
-                      className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer"
+                      className="bg-gradient-to-r from-[#D33454] to-[#B72B48] dark:from-[#FF5C7A] dark:to-[#FF7A92] text-white hover:scale-105 transition-transform duration-200 cursor-pointer"
                       onClick={handleAddToFavourites}
                     >
                       Add to Favourites
                     </Button>
                   )
                 ) : (
-                  <Button className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer">
+                  <Button className="bg-gradient-to-r from-[#D33454] to-[#B72B48] dark:from-[#FF5C7A] dark:to-[#FF7A92] text-white hover:scale-105 transition-transform duration-200">
                     Added to Favourites
                   </Button>
                 ))}
+
               {!isAdmin && !isPremium && !myBiodata && !contactDataItem && (
                 <Button
-                  className={"cursor-pointer"}
-                  variant="outline"
+                  className="border border-[#D33454] bg-white hover:bg-white dark:border-[#FF5C7A] text-[#D33454] dark:text-[#FF5C7A] hover:scale-105 transition-transform duration-200 cursor-pointer"
                   onClick={() =>
                     navigate(`/biodatas/checkout/${biodata.biodataID}`)
                   }
@@ -164,8 +172,7 @@ const BioDataDetails = () => {
                 </Button>
               )}
 
-              {!isAdmin &&
-                !isPremium &&
+              {!isPremium &&
                 !myBiodata &&
                 contactDataItem?.status === "pending" && (
                   <Button
@@ -192,28 +199,30 @@ const BioDataDetails = () => {
       {/* Similar Biodatas */}
       {similarBiodatas.length > 0 && (
         <div className="mt-12 max-w-5xl mx-auto">
-          <h3 className="text-xl font-semibold text-[#D33454] mb-6">
+          <h3 className="text-xl font-semibold text-[#D33454] dark:text-[#FF5C7A] mb-6 transition-colors duration-500 ease-in-out">
             Similar {biodata.type} Biodatas
           </h3>
           <div className="grid gap-6 grid-cols-1 md:grid-cols-3">
             {similarBiodatas?.map((user) => (
               <div
                 key={user._id}
-                className="bg-white p-4 rounded-lg shadow-md border hover:shadow-lg transition"
+                className="bg-white dark:bg-[#1E1E1E] p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
               >
                 <img
                   src={user.profileImage}
                   alt={user.name}
-                  className="w-24 h-24 mx-auto rounded-full border-2 border-[#E3D4B4] object-cover mb-4"
+                  className="w-24 h-24 mx-auto rounded-full border-2 border-[#E3D4B4] dark:border-[#3A3A3A] object-cover mb-4 transition-colors duration-500 ease-in-out"
                 />
-                <div className="text-center text-sm text-gray-600">
-                  <p className="font-semibold text-[#B72B48]">{user.name}</p>
+                <div className="text-center text-sm text-gray-600 dark:text-gray-300 transition-colors duration-500 ease-in-out">
+                  <p className="font-semibold text-[#B72B48] dark:text-[#FF5C7A]">
+                    {user.name}
+                  </p>
                   <p>Age: {user.age}</p>
                   <p>Division: {user.presentDivision}</p>
                   <p>Occupation: {user.occupation}</p>
                   <Button
                     onClick={() => navigate(`/biodatas/${user.biodataID}`)}
-                    className="mt-3 w-full bg-[#D33454] hover:bg-[#b72b48] text-white text-sm cursor-pointer"
+                    className="mt-3 w-full bg-gradient-to-r from-[#D33454] to-[#B72B48] dark:from-[#FF5C7A] dark:to-[#FF7A92] text-white text-sm hover:scale-105 transition-transform duration-200 cursor-pointer"
                   >
                     View Profile
                   </Button>

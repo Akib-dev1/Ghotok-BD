@@ -17,7 +17,9 @@ const Biodatas = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["biodatas"],
     queryFn: async () => {
-      const res = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata");
+      const res = await axios.get(
+        "https://b11a12-server-side-akib-dev1.vercel.app/biodata"
+      );
       return res.data;
     },
   });
@@ -65,17 +67,17 @@ const Biodatas = () => {
   }
 
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 flex flex-col justify-between">
+    <section className="min-h-screen bg-[#FFF3F5] dark:bg-[#121212] text-gray-900 dark:text-gray-100 py-12 px-4 transition-colors duration-500 ease-in-out flex flex-col justify-between">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10">
         {/* Filter Section */}
-        <aside className="bg-white border h-fit border-gray-200 p-6 rounded-xl shadow-md">
-          <h3 className="text-xl font-semibold text-[#D33454] mb-4">
+        <aside className="bg-white dark:bg-[#1E1E1E] border h-fit border-gray-200 dark:border-gray-700 p-6 rounded-2xl shadow-md transition-colors duration-500 ease-in-out">
+          <h3 className="text-xl font-semibold text-[#D33454] dark:text-[#FF5C7A] mb-4 transition-colors duration-500 ease-in-out">
             Filter Biodatas
           </h3>
 
           {/* Age Filter */}
           <div className="mb-6">
-            <label className="block mb-2 text-sm text-[#B72B48] font-medium">
+            <label className="block mb-2 text-sm text-[#B72B48] dark:text-[#FF7A92] font-medium transition-colors duration-500 ease-in-out">
               Age Range
             </label>
             <div className="flex gap-2 items-center">
@@ -84,28 +86,28 @@ const Biodatas = () => {
                 placeholder="Min"
                 value={minAge}
                 onChange={(e) => setMinAge(e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-[#2A2A2A] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#D33454] dark:focus:ring-[#FF5C7A] transition-colors duration-500 ease-in-out"
               />
-              <span className="text-[#B72B48]">-</span>
+              <span className="text-[#B72B48] dark:text-[#FF7A92]">-</span>
               <input
                 type="number"
                 placeholder="Max"
                 value={maxAge}
                 onChange={(e) => setMaxAge(e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none"
+                className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-[#2A2A2A] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#D33454] dark:focus:ring-[#FF5C7A] transition-colors duration-500 ease-in-out"
               />
             </div>
           </div>
 
           {/* Biodata Type Filter */}
           <div className="mb-6">
-            <label className="block mb-2 text-sm text-[#B72B48] font-medium">
+            <label className="block mb-2 text-sm text-[#B72B48] dark:text-[#FF7A92] font-medium transition-colors duration-500 ease-in-out">
               Biodata Type
             </label>
             <select
               value={biodataType}
               onChange={(e) => setBiodataType(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-[#2A2A2A] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#D33454] dark:focus:ring-[#FF5C7A] transition-colors duration-500 ease-in-out cursor-pointer"
             >
               <option value="">All</option>
               <option value="Male">Male</option>
@@ -115,13 +117,13 @@ const Biodatas = () => {
 
           {/* Division Filter */}
           <div>
-            <label className="block mb-2 text-sm text-[#B72B48] font-medium">
+            <label className="block mb-2 text-sm text-[#B72B48] dark:text-[#FF7A92] font-medium transition-colors duration-500 ease-in-out">
               Division
             </label>
             <select
               value={division}
               onChange={(e) => setDivision(e.target.value)}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none"
+              className="w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 bg-white dark:bg-[#2A2A2A] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-[#D33454] dark:focus:ring-[#FF5C7A] transition-colors duration-500 ease-in-out cursor-pointer"
             >
               <option value="">All</option>
               <option value="Dhaka">Dhaka</option>
@@ -141,50 +143,54 @@ const Biodatas = () => {
             currentItems.map((user, index) => (
               <div
                 key={index}
-                className="bg-white border border-gray-200 rounded-xl p-6 shadow-md flex flex-col items-center hover:shadow-lg transition"
+                className="bg-white dark:bg-[#1E1E1E] border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-md flex flex-col items-center hover:shadow-xl transition-all duration-300"
               >
                 <img
                   src={user.profileImage}
                   alt="Profile"
-                  className="w-28 h-28 rounded-full object-cover border-2 border-[#E3D4B4] mb-4"
+                  className="w-28 h-28 rounded-full object-cover border-2 border-[#E3D4B4] dark:border-[#3A3A3A] mb-4 transition-colors duration-500 ease-in-out"
                 />
-                <div className="text-center w-full">
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="font-semibold text-[#B72B48]">
+                <div className="text-center w-full text-gray-600 dark:text-gray-300 transition-colors duration-500 ease-in-out">
+                  <p className="text-sm mb-1">
+                    <span className="font-semibold text-[#B72B48] dark:text-[#FF5C7A]">
                       Biodata ID:
                     </span>{" "}
                     {user.biodataID}
                   </p>
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="font-semibold text-[#B72B48]">Type:</span>{" "}
+                  <p className="text-sm mb-1">
+                    <span className="font-semibold text-[#B72B48] dark:text-[#FF5C7A]">
+                      Type:
+                    </span>{" "}
                     {user.type}
                   </p>
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="font-semibold text-[#B72B48]">
+                  <p className="text-sm mb-1">
+                    <span className="font-semibold text-[#B72B48] dark:text-[#FF5C7A]">
                       Division:
                     </span>{" "}
                     {user.permanentDivision}
                   </p>
-                  <p className="text-sm text-gray-600 mb-1">
-                    <span className="font-semibold text-[#B72B48]">Age:</span>{" "}
+                  <p className="text-sm mb-1">
+                    <span className="font-semibold text-[#B72B48] dark:text-[#FF5C7A]">
+                      Age:
+                    </span>{" "}
                     {user.age}
                   </p>
-                  <p className="text-sm text-gray-600 mb-4">
-                    <span className="font-semibold text-[#B72B48]">
+                  <p className="text-sm mb-4">
+                    <span className="font-semibold text-[#B72B48] dark:text-[#FF5C7A]">
                       Occupation:
                     </span>{" "}
                     {user.occupation}
                   </p>
                 </div>
                 <Link to={`/biodatas/${user.biodataID}`}>
-                  <Button className="bg-[#D33454] hover:bg-[#b72b48] text-white text-sm w-full cursor-pointer">
+                  <Button className="w-full bg-gradient-to-r from-[#D33454] to-[#B72B48] dark:from-[#FF5C7A] dark:to-[#FF7A92] text-white text-sm hover:scale-105 cursor-pointer transition-transform duration-200">
                     View Profile
                   </Button>
                 </Link>
               </div>
             ))
           ) : (
-            <p className="col-span-full text-center text-gray-500 text-lg font-medium">
+            <p className="col-span-full text-center text-gray-500 dark:text-gray-400 text-lg font-medium transition-colors duration-500 ease-in-out">
               No biodatas found with selected filters.
             </p>
           )}
@@ -192,15 +198,15 @@ const Biodatas = () => {
       </div>
 
       {/* Pagination */}
-      <div className="mt-6 flex justify-center">
+      <div className="mt-6 flex justify-center flex-wrap gap-2">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <button
             key={page}
             onClick={() => setCurrentPage(page)}
-            className={`mx-1 px-3 py-1 border rounded-md transition ${
+            className={`mx-1 px-3 py-1 rounded-md transition-all duration-300 ${
               currentPage === page
-                ? "bg-[#D33454] text-white border-[#D33454]"
-                : "bg-white text-gray-700 border-gray-300 hover:bg-[#b72b48] hover:text-white"
+                ? "bg-[#D33454] text-white border border-[#D33454]"
+                : "bg-white dark:bg-[#1E1E1E] text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-700 hover:bg-[#b72b48] hover:text-white cursor-pointer dark:hover:bg-[#FF5C7A] dark:hover:text-white"
             }`}
           >
             {page}
