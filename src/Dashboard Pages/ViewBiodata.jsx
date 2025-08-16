@@ -165,7 +165,7 @@ const ViewBiodata = () => {
               alt="Profile"
               className="rounded-xl shadow-lg w-full max-w-xs mb-6 border border-gray-200"
             />
-            {!done && !userData.isPremium ? (
+            {!done && !userData?.isPremium ? (
               <Button
                 onClick={() => setOpen(true)}
                 className="bg-[#D33454] hover:bg-[#b72b48] text-white text-lg px-6 py-3 rounded-md cursor-pointer duration-200"

@@ -52,13 +52,6 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
       {data?.role === "normal" && (
         <>
           <NavLink
-            to="/dashboard/overview"
-            onClick={onNavigate}
-            className={baseClass}
-          >
-            <FaTachometerAlt className="text-lg" /> Overview
-          </NavLink>
-          <NavLink
             to="/dashboard/profile"
             end
             onClick={onNavigate}
@@ -66,6 +59,14 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
           >
             <AiFillProfile className="text-lg" />
             Profile
+          </NavLink>
+
+          <NavLink
+            to="/dashboard/overview"
+            onClick={onNavigate}
+            className={baseClass}
+          >
+            <FaTachometerAlt className="text-lg" /> Overview
           </NavLink>
 
           <NavLink
