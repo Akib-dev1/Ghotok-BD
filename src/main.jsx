@@ -13,7 +13,7 @@ import Signup from "./Pages/Signup.jsx";
 import AuthProvidor from "./Contexts/AuthProvidor";
 import { Toaster } from "react-hot-toast";
 import DashboardLayout from "./Layouts/DashboardLayout";
-import Overview from "./Dashboard Pages/Overview";
+import Profile from "./Dashboard Pages/Profile";
 import ManageUsers from "./Dashboard Pages/ManageUsers";
 import ApprovedPremium from "./Dashboard Pages/ApprovedPremium";
 import ApprovedContactRequest from "./Dashboard Pages/ApprovedContactRequest";
@@ -31,6 +31,7 @@ import BioDataDetails from "./Pages/BioDataDetails";
 import Checkout from "./Pages/Checkout";
 import SuccessStories from "./Dashboard Pages/SuccessStories";
 import AddSuccessStories from "./Dashboard Pages/AddSuccessStories";
+import Overview from "./Dashboard Pages/Overview";
 
 const queryClient = new QueryClient();
 
@@ -100,6 +101,14 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: "/dashboard/profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
+      },
       {
         path: "/dashboard/overview",
         element: (

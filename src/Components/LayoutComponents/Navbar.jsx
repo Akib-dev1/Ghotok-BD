@@ -38,7 +38,7 @@ const Navbar = () => {
         <div className="hidden md:block">
           {user ? (
             <Link
-              to={data?.role === "admin" ? "/dashboard" : "/dashboard/overview"}
+              to={data?.role === "admin" ? "/dashboard" : "/dashboard/profile"}
               className="bg-[#D33454] text-white px-4 py-2 rounded-full hover:border-[#D33454] border border-[#D33454] hover:bg-inherit duration-150 ease-in hover:text-[#000000] text-lg"
             >
               Dashboard
@@ -83,7 +83,7 @@ const Navbar = () => {
           </NavLink>
           {user ? (
             <Link
-              to={data?.role === "admin" ? "/dashboard" : "/dashboard/overview"}
+              to={data?.role === "admin" ? "/dashboard" : "/dashboard/profile"}
               onClick={() => setIsOpen(false)}
               className="bg-[#D33454] text-white text-center py-2 rounded-md hover:bg-[#D33454]/80"
             >

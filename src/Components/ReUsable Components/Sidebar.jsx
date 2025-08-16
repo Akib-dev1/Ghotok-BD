@@ -13,6 +13,7 @@ import {
   FaStar,
   FaCheckCircle,
 } from "react-icons/fa";
+import { AiFillProfile } from "react-icons/ai";
 import { GiLovers } from "react-icons/gi";
 import { NavLink } from "react-router";
 import { ScaleLoader } from "react-spinners";
@@ -26,7 +27,9 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
     queryKey: ["user", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axios.get(`https://b11a12-server-side-akib-dev1.vercel.app/users/${user.email}`);
+      const res = await axios.get(
+        `https://b11a12-server-side-akib-dev1.vercel.app/users/${user.email}`
+      );
       return res.data;
     },
   });
@@ -50,12 +53,19 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
         <>
           <NavLink
             to="/dashboard/overview"
+            onClick={onNavigate}
+            className={baseClass}
+          >
+            <FaTachometerAlt className="text-lg" /> Overview
+          </NavLink>
+          <NavLink
+            to="/dashboard/profile"
             end
             onClick={onNavigate}
             className={baseClass}
           >
-            <FaTachometerAlt className="text-lg" />
-            Overview
+            <AiFillProfile className="text-lg" />
+            Profile
           </NavLink>
 
           <NavLink
@@ -115,6 +125,15 @@ const Sidebar = ({ layout = "vertical", onNavigate }) => {
           >
             <FaUserShield className="text-lg" />
             Admin Dashboard
+          </NavLink>
+          <NavLink
+            to="/dashboard/profile"
+            end
+            onClick={onNavigate}
+            className={baseClass}
+          >
+            <AiFillProfile className="text-lg" />
+            Profile
           </NavLink>
           <NavLink
             to="/dashboard/manage"
