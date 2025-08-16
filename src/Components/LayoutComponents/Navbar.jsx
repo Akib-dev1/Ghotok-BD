@@ -1,6 +1,6 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa";
 import { AuthContext } from "@/Contexts/AuthProvidor";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -13,10 +13,26 @@ const Navbar = () => {
     queryKey: ["user", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axios.get(`https://b11a12-server-side-akib-dev1.vercel.app/users/${user.email}`);
+      const res = await axios.get(
+        `https://b11a12-server-side-akib-dev1.vercel.app/users/${user.email}`
+      );
       return res.data;
     },
   });
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
   return (
     <nav className="backdrop-blur-lg bg-[#E3D4B4] shadow-md z-50 relative">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto px-4 py-3 flex items-center justify-between">
@@ -35,7 +51,7 @@ const Navbar = () => {
           <NavLink to="/contact">Contact Us</NavLink>
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center">
           {user ? (
             <Link
               to={data?.role === "admin" ? "/dashboard" : "/dashboard/profile"}
@@ -51,6 +67,15 @@ const Navbar = () => {
               Login
             </Link>
           )}
+          <button
+            onClick={toggleTheme}
+            className="p-2 ml-4 cursor-pointer rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-yellow-400 transition-colors duration-300 hover:scale-110"
+            title={
+              theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"
+            }
+          >
+            {theme === "dark" ? <FaSun size={20} /> : <FaMoon size={20} />}
+          </button>
         </div>
 
         <div className="md:hidden">
@@ -98,6 +123,15 @@ const Navbar = () => {
               Login
             </Link>
           )}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full self-center bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-yellow-400 transition-colors duration-300 hover:scale-110"
+            title={
+              theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"
+            }
+          >
+            {theme === "dark" ? <FaSun size={20} /> : <FaMoon size={20} />}
+          </button>
         </div>
       </div>
     </nav>

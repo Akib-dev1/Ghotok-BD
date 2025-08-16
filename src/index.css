@@ -3,6 +3,7 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 .active {
   @apply text-[#D33454] font-semibold border-b-2 border-[#D33454] pb-1;
 }
