@@ -1,8 +1,11 @@
 import Banner from "@/Components/ReUsable Components/Banner";
 import BiodataList from "@/Components/ReUsable Components/BiodataList";
 import HowItWorks from "@/Components/ReUsable Components/HowItWorks";
+import Safety from "@/Components/ReUsable Components/Safety";
 import SuccessCouter from "@/Components/ReUsable Components/SuccessCouter";
 import SuccessStory from "@/Components/ReUsable Components/SuccessStory";
+import WhyChooseUS from "@/Components/ReUsable Components/WhyChooseUS";
+import WhyPremium from "@/Components/ReUsable Components/WhyPremium";
 import React from "react";
 
 const Home = () => {
@@ -23,6 +26,10 @@ const Home = () => {
       <section>
         <SuccessStory />
       </section>
+      <section>
+        <WhyPremium />
+      </section>
+      
     </main>
   );
 };
