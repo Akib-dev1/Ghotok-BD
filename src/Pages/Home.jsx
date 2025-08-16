@@ -32,6 +32,9 @@ const Home = () => {
       <section>
         <Safety />
       </section>
+      <section>
+        <WhyChooseUS />
+      </section>
     </main>
   );
 };
