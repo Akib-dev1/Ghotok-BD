@@ -75,13 +75,13 @@ const Overview = () => {
     );
   }
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-8">
+    <section className="min-h-screen bg-[#FFF3F5] dark:bg-[#121212] py-8 transition-colors duration-500">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto">
         {/* Welcome */}
-        <h2 className="text-2xl font-bold text-[#D33454] mb-6">
+        <h2 className="text-2xl font-bold text-[#D33454] dark:text-[#FF5C7A] mb-6">
           👋 Welcome back, {user?.displayName}
         </h2>
-        <p className="text-gray-600 mb-8">
+        <p className="text-gray-600 dark:text-gray-300 mb-8">
           Here’s a quick overview of your activity.
         </p>
 
@@ -90,13 +90,13 @@ const Overview = () => {
           {userStats.map((stat) => (
             <Card
               key={stat.id}
-              className="shadow-lg rounded-xl border border-gray-200 bg-white"
+              className="shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1F1F1F]"
             >
               <CardContent className="p-6 text-center">
-                <h3 className="text-lg font-semibold text-[#D33454]">
+                <h3 className="text-lg font-semibold text-[#D33454] dark:text-[#FF5C7A]">
                   {stat.title}
                 </h3>
-                <p className="text-2xl font-bold text-gray-800 mt-2">
+                <p className="text-2xl font-bold text-gray-800 dark:text-gray-200 mt-2">
                   {stat.value}
                 </p>
               </CardContent>
@@ -107,14 +107,18 @@ const Overview = () => {
         {/* Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Line Chart */}
-          <div className="bg-white shadow-lg rounded-xl border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-[#D33454] mb-4">
+          <div className="bg-white dark:bg-[#1F1F1F] shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h3 className="text-lg font-semibold text-[#D33454] dark:text-[#FF5C7A] mb-4">
               Activity Over Time
             </h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={activityData}>
-                <XAxis dataKey="name" />
-                <YAxis />
+                <XAxis
+                  dataKey="name"
+                  stroke="#656B76"
+                  className="dark:text-gray-200"
+                />
+                <YAxis stroke="#656B76" className="dark:text-gray-200" />
                 <Tooltip />
                 <Line
                   type="monotone"
@@ -133,8 +137,8 @@ const Overview = () => {
           </div>
 
           {/* Pie Chart */}
-          <div className="bg-white shadow-lg rounded-xl border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-[#D33454] mb-4">
+          <div className="bg-white dark:bg-[#1F1F1F] shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <h3 className="text-lg font-semibold text-[#D33454] dark:text-[#FF5C7A] mb-4">
               Request Status
             </h3>
             <ResponsiveContainer width="100%" height={300}>

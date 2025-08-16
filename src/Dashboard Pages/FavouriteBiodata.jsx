@@ -54,15 +54,15 @@ const FavouriteBiodata = () => {
   }
 
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 ">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
-        <h1 className="text-3xl font-bold mb-8 text-center text-[#D33454]">
+    <section className="min-h-screen bg-[#FFF3F5] dark:bg-[#121212] py-12 px-4 transition-colors duration-500">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white dark:bg-[#1F1F1F] rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-10 transition-colors duration-500">
+        <h1 className="text-3xl font-bold mb-8 text-center text-[#D33454] dark:text-[#FF5C7A]">
           My Favourite Biodatas
         </h1>
 
         <div className="overflow-x-auto rounded-lg">
-          <table className="min-w-full text-sm border border-gray-300 text-center">
-            <thead className="bg-[#D33454] text-white">
+          <table className="min-w-full text-sm border border-gray-300 dark:border-gray-600 text-center">
+            <thead className="bg-[#D33454] dark:bg-[#FF5C7A] text-white font-semibold">
               <tr>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Biodata ID</th>
@@ -71,11 +71,12 @@ const FavouriteBiodata = () => {
                 <th className="px-4 py-3">Action</th>
               </tr>
             </thead>
-            <tbody className="text-gray-700 font-[Poppins]">
+
+            <tbody className="text-gray-700 dark:text-gray-200 font-[Poppins]">
               {favourites.map((item) => (
                 <tr
                   key={item._id}
-                  className="hover:bg-[#fdf1f2] border-b transition"
+                  className="hover:bg-[#fdf1f2] dark:hover:bg-[#2A2A2A] border-b dark:border-gray-700 transition-colors duration-300"
                 >
                   <td className="px-4 py-3">{item.name}</td>
                   <td className="px-4 py-3">{item.biodataID}</td>
@@ -84,7 +85,7 @@ const FavouriteBiodata = () => {
                   <td className="px-4 py-3 flex justify-center">
                     <button
                       onClick={() => handleDelete(item._id)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs flex items-center cursor-pointer justify-center gap-2 transition"
+                      className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white px-3 py-1 rounded text-xs flex items-center cursor-pointer justify-center gap-2 transition-colors duration-300"
                     >
                       <FaTrashAlt className="text-white text-sm" />
                       Delete
@@ -94,7 +95,10 @@ const FavouriteBiodata = () => {
               ))}
               {favourites.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="py-6 text-gray-500 italic">
+                  <td
+                    colSpan="5"
+                    className="py-6 text-gray-500 dark:text-gray-400 italic"
+                  >
                     No favourite biodatas found.
                   </td>
                 </tr>

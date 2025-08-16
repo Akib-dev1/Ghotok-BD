@@ -9,7 +9,9 @@ const ManageUsers = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["allUsers"],
     queryFn: async () => {
-      const res = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/users");
+      const res = await axios.get(
+        "https://b11a12-server-side-akib-dev1.vercel.app/users"
+      );
       return res.data;
     },
   });
@@ -73,15 +75,15 @@ const ManageUsers = () => {
     );
   }
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
-        <h2 className="text-4xl font-bold text-[#D33454] mb-10 text-center great-vibes">
+    <section className="min-h-screen bg-[#FFF3F5] dark:bg-[#121212] py-12 px-4 transition-colors duration-500">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white dark:bg-[#1F1F1F] rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-10 transition-colors duration-500">
+        <h2 className="text-4xl font-bold text-[#D33454] dark:text-[#FF5C7A] mb-10 text-center great-vibes">
           Manage Users
         </h2>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border-collapse">
-            <thead className="bg-[#D33454] text-white">
+          <table className="min-w-full table-auto border-collapse text-gray-800 dark:text-gray-200 transition-colors duration-500">
+            <thead className="bg-[#D33454] dark:bg-[#FF5C7A] text-white font-semibold">
               <tr>
                 <th className="px-4 py-2 text-left">Name</th>
                 <th className="px-4 py-2 text-left">Email</th>
@@ -91,7 +93,10 @@ const ManageUsers = () => {
             </thead>
             <tbody>
               {data.map((user) => (
-                <tr key={user._id} className="border-b hover:bg-[#fdf1f2]">
+                <tr
+                  key={user._id}
+                  className="border-b dark:border-gray-700 hover:bg-[#fdf1f2] dark:hover:bg-[#2A2A2A] transition-colors duration-300"
+                >
                   <td className="px-4 py-3">{user.displayName}</td>
                   <td className="px-4 py-3">{user.email}</td>
                   <td className="px-4 py-3 text-center">
@@ -101,7 +106,7 @@ const ManageUsers = () => {
                       </span>
                     ) : (
                       <Button
-                        className="bg-[#D33454] hover:bg-[#b72b48] text-white text-sm cursor-pointer"
+                        className="bg-[#D33454] dark:bg-[#FF5C7A] hover:bg-[#b72b48] dark:hover:bg-[#FF8AA3] text-white text-sm cursor-pointer transition-colors duration-300"
                         onClick={() => handleMakeAdmin(user.email)}
                       >
                         Make Admin
@@ -115,7 +120,7 @@ const ManageUsers = () => {
                       </span>
                     ) : (
                       <Button
-                        className="bg-[#E3D4B4] hover:bg-[#cbb88f] text-[#5A3B3B] text-sm cursor-pointer"
+                        className="bg-[#E3D4B4] dark:bg-[#3A2D23] hover:bg-[#cbb88f] dark:hover:bg-[#5A4936] text-[#5A3B3B] dark:text-[#F1E5D0] text-sm cursor-pointer transition-colors duration-300"
                         onClick={() => handleMakePremium(user.email)}
                       >
                         Make Premium

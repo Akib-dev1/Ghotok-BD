@@ -31,7 +31,9 @@ const MyContactRequest = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact/requests/${id}`)
+          .delete(
+            `https://b11a12-server-side-akib-dev1.vercel.app/biodata/contact/requests/${id}`
+          )
           .then((response) => {
             if (response.data.deletedCount > 0) {
               Swal.fire({
@@ -54,15 +56,15 @@ const MyContactRequest = () => {
   }
 
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-12 px-4 ">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
-        <h2 className="text-3xl font-bold text-center text-[#D33454] mb-8">
+    <section className="min-h-screen bg-[#FFF3F5] dark:bg-[#121212] py-12 px-4 transition-colors duration-500">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white dark:bg-[#1F1F1F] rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-10 transition-colors duration-500">
+        <h2 className="text-3xl font-bold text-center text-[#D33454] dark:text-[#FF5C7A] mb-8">
           My Contact Requests
         </h2>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full text-sm border border-gray-300 text-center">
-            <thead className="bg-[#D33454] text-white">
+          <table className="min-w-full text-sm border border-gray-300 dark:border-gray-600 text-center">
+            <thead className="bg-[#D33454] dark:bg-[#FF5C7A] text-white font-semibold">
               <tr>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Biodata ID</th>
@@ -72,11 +74,11 @@ const MyContactRequest = () => {
                 <th className="px-4 py-3">Action</th>
               </tr>
             </thead>
-            <tbody className="text-gray-700 font-[Poppins]">
+            <tbody className="text-gray-700 dark:text-gray-200 font-[Poppins]">
               {finalData?.map((req, index) => (
                 <tr
                   key={index}
-                  className="hover:bg-[#fdf1f2] border-b transition"
+                  className="hover:bg-[#fdf1f2] dark:hover:bg-[#2A2A2A] border-b dark:border-gray-700 transition-colors duration-300"
                 >
                   <td className="px-4 py-3">{req.biodataName}</td>
                   <td className="px-4 py-3">{req.biodataID}</td>
@@ -100,7 +102,7 @@ const MyContactRequest = () => {
                   <td className="px-4 py-3">
                     <button
                       onClick={() => handleDelete(req.biodataID)}
-                      className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition cursor-pointer"
+                      className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white px-3 py-1 rounded text-xs transition-colors duration-300 cursor-pointer"
                     >
                       Delete
                     </button>
@@ -109,7 +111,10 @@ const MyContactRequest = () => {
               ))}
               {finalData?.length === 0 && (
                 <tr>
-                  <td colSpan="6" className="py-6 text-gray-500 italic">
+                  <td
+                    colSpan="6"
+                    className="py-6 text-gray-500 dark:text-gray-400 italic"
+                  >
                     You have no contact requests yet.
                   </td>
                 </tr>

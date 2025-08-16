@@ -9,7 +9,9 @@ const SuccessCounter = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["biodatas"],
     queryFn: async () => {
-      const response = await axios.get("https://b11a12-server-side-akib-dev1.vercel.app/biodata");
+      const response = await axios.get(
+        "https://b11a12-server-side-akib-dev1.vercel.app/biodata"
+      );
       return response.data;
     },
   });
@@ -37,42 +39,41 @@ const SuccessCounter = () => {
     );
   }
   return (
-    <section className="mb-10 py-16">
+    <section className="mb-10 py-16 transition-colors duration-500 ease-in-out">
       <div className="max-w-9/12 mx-auto max-lg:max-w-10/12 max-md:max-w-11/12 px-4 text-center">
-        <h2 className="text-4xl font-bold text-[#D33454] great-vibes mb-10">
+        <h2 className="text-4xl font-bold text-[#D33454] dark:text-[#FF5C7A] great-vibes mb-10 transition-colors duration-500 ease-in-out">
           Our Success in Numbers
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="bg-white shadow rounded-2xl py-6 px-4 space-y-2">
-            <FaUsers className="text-[#D33454] text-3xl mx-auto" />
-            <h3 className="text-2xl font-bold text-gray-800">Total Biodatas</h3>
-            <p className="text-[#D33454] text-3xl font-bold">
-              <CountUp end={totalBiodatas} duration={5} />
-            </p>
-          </div>
-          <div className="bg-white shadow rounded-2xl py-6 px-4 space-y-2">
-            <FaFemale className="text-[#D33454] text-3xl mx-auto" />
-            <h3 className="text-2xl font-bold text-gray-800">Girls Biodata</h3>
-            <p className="text-[#D33454] text-3xl font-bold">
-              <CountUp end={totalGirls} duration={5} />
-            </p>
-          </div>
-          <div className="bg-white shadow rounded-2xl py-6 px-4 space-y-2">
-            <FaMale className="text-[#D33454] text-3xl mx-auto" />
-            <h3 className="text-2xl font-bold text-gray-800">Boys Biodata</h3>
-            <p className="text-[#D33454] text-3xl font-bold">
-              <CountUp end={totalBoys} duration={5} />
-            </p>
-          </div>
-          <div className="bg-white shadow rounded-2xl py-6 px-4 space-y-2">
-            <FaHeart className="text-[#D33454] text-3xl mx-auto" />
-            <h3 className="text-2xl font-bold text-gray-800">
-              Marriages Completed
-            </h3>
-            <p className="text-[#D33454] text-3xl font-bold">
-              <CountUp end={totalMarriages} duration={5} />
-            </p>
-          </div>
+          {[
+            {
+              icon: <FaUsers />,
+              label: "Total Biodatas",
+              value: totalBiodatas,
+            },
+            { icon: <FaFemale />, label: "Girls Biodata", value: totalGirls },
+            { icon: <FaMale />, label: "Boys Biodata", value: totalBoys },
+            {
+              icon: <FaHeart />,
+              label: "Marriages Completed",
+              value: totalMarriages,
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-white dark:bg-[#2A2A2A] shadow-md rounded-2xl flex flex-col justify-center py-6 px-4 space-y-2 transition-colors duration-500 ease-in-out"
+            >
+              <div className="text-[#D33454] dark:text-[#FF5C7A] text-3xl mx-auto transition-colors duration-500 ease-in-out">
+                {item.icon}
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 transition-colors duration-500 ease-in-out">
+                {item.label}
+              </h3>
+              <p className="text-[#D33454] dark:text-[#FF5C7A] text-3xl font-bold transition-colors duration-500 ease-in-out">
+                <CountUp end={item.value} duration={5} />
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

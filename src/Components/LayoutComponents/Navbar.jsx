@@ -19,20 +19,26 @@ const Navbar = () => {
       return res.data;
     },
   });
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "light"; // Load saved theme
+  });
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
+
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+
+    localStorage.setItem("theme", theme); // Save theme on change
   }, [theme]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
+
   return (
     <nav className="backdrop-blur-lg bg-[#E3D4B4] shadow-md z-50 relative">
       <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto px-4 py-3 flex items-center justify-between">

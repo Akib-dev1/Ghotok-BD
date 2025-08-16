@@ -64,12 +64,6 @@ const ViewBiodata = () => {
     }
   };
 
-  const fieldClass =
-    "bg-[#FFF3F5] p-4 w-full rounded-lg shadow-sm border mb-4 last:mb-0";
-
-  const labelClass = "text-sm mb-1 font-semibold text-[#B72B48]";
-  const valueClass = "text-base text-gray-800";
-
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-full">
@@ -79,83 +73,46 @@ const ViewBiodata = () => {
   }
 
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-12">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white rounded-xl shadow-xl border border-gray-200 p-10">
-        <h2 className="text-4xl font-bold text-[#D33454] mb-10 text-center great-vibes">
+    <section className="min-h-screen bg-[#FFF3F5] dark:bg-[#121212] py-12 transition-colors duration-500">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white dark:bg-[#1F1F1F] rounded-xl shadow-xl border border-gray-200 dark:border-gray-700 p-10 transition-colors duration-500">
+        <h2 className="text-4xl font-bold text-[#D33454] dark:text-[#FF5C7A] mb-10 text-center great-vibes">
           Your Biodata Information
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Left two columns with fields */}
           <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className={fieldClass}>
-              <p className={labelClass}>Biodata Type</p>
-              <p className={valueClass}>{data?.type}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Full Name</p>
-              <p className={valueClass}>{data?.name}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Date of Birth</p>
-              <p className={valueClass}>{data?.dob}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Height</p>
-              <p className={valueClass}>{data?.height}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Weight</p>
-              <p className={valueClass}>{data?.weight}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Age</p>
-              <p className={valueClass}>{data?.age}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Occupation</p>
-              <p className={valueClass}>{data?.occupation}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Race</p>
-              <p className={valueClass}>{data?.race}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Father's Name</p>
-              <p className={valueClass}>{data?.father}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Mother's Name</p>
-              <p className={valueClass}>{data?.mother}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Permanent Division</p>
-              <p className={valueClass}>{data?.permanentDivision}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Present Division</p>
-              <p className={valueClass}>{data?.presentDivision}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Expected Partner Age</p>
-              <p className={valueClass}>{data?.partnerAge}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Expected Partner Height</p>
-              <p className={valueClass}>{data?.partnerHeight}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Expected Partner Weight</p>
-              <p className={valueClass}>{data?.partnerWeight}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Contact Email</p>
-              <p className={valueClass}>{data?.email}</p>
-            </div>
-            <div className={fieldClass}>
-              <p className={labelClass}>Mobile Number</p>
-              <p className={valueClass}>{data?.mobile}</p>
-            </div>
+            {[
+              { label: "Biodata Type", value: data?.type },
+              { label: "Full Name", value: data?.name },
+              { label: "Date of Birth", value: data?.dob },
+              { label: "Height", value: data?.height },
+              { label: "Weight", value: data?.weight },
+              { label: "Age", value: data?.age },
+              { label: "Occupation", value: data?.occupation },
+              { label: "Race", value: data?.race },
+              { label: "Father's Name", value: data?.father },
+              { label: "Mother's Name", value: data?.mother },
+              { label: "Permanent Division", value: data?.permanentDivision },
+              { label: "Present Division", value: data?.presentDivision },
+              { label: "Expected Partner Age", value: data?.partnerAge },
+              { label: "Expected Partner Height", value: data?.partnerHeight },
+              { label: "Expected Partner Weight", value: data?.partnerWeight },
+              { label: "Contact Email", value: data?.email },
+              { label: "Mobile Number", value: data?.mobile },
+            ].map((field, idx) => (
+              <div
+                key={idx}
+                className="bg-[#FFF3F5] dark:bg-[#2A2A2A] h-full w-full p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 transition-colors duration-300"
+              >
+                <p className="text-sm mb-1 font-semibold text-[#B72B48] dark:text-[#FF5C7A]">
+                  {field.label}
+                </p>
+                <p className="text-base text-gray-800 dark:text-gray-200">
+                  {field.value || "N/A"}
+                </p>
+              </div>
+            ))}
           </div>
 
           {/* Right column with image and button */}
@@ -163,17 +120,17 @@ const ViewBiodata = () => {
             <img
               src={data?.profileImage}
               alt="Profile"
-              className="rounded-xl shadow-lg w-full max-w-xs mb-6 border border-gray-200"
+              className="rounded-xl shadow-lg w-full max-w-xs mb-6 border border-gray-200 dark:border-gray-700 transition-colors duration-300"
             />
             {!done && !userData?.isPremium ? (
               <Button
                 onClick={() => setOpen(true)}
-                className="bg-[#D33454] hover:bg-[#b72b48] text-white text-lg px-6 py-3 rounded-md cursor-pointer duration-200"
+                className="bg-[#D33454] dark:bg-[#FF5C7A] hover:bg-[#b72b48] dark:hover:bg-[#FF3F70] text-white text-lg px-6 py-3 rounded-md cursor-pointer duration-200 transition-colors"
               >
                 Make Biodata Premium
               </Button>
             ) : (
-              <span className="bg-[#D33454] text-white text-lg px-6 py-1.5 rounded-md">
+              <span className="bg-[#D33454] dark:bg-[#FF5C7A] text-white text-lg px-6 py-1.5 rounded-md">
                 Premium Account
               </span>
             )}
@@ -182,25 +139,25 @@ const ViewBiodata = () => {
 
         {/* Premium Confirmation Modal */}
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className="rounded-lg max-w-md">
+          <DialogContent className="rounded-lg max-w-md bg-white dark:bg-[#1F1F1F] border border-gray-200 dark:border-gray-700 shadow-lg p-6 transition-colors duration-500">
             <DialogHeader>
-              <DialogTitle className="text-[#D33454] text-xl font-bold">
+              <DialogTitle className="text-[#D33454] dark:text-[#FF5C7A] text-xl font-bold">
                 Confirm Premium Upgrade
               </DialogTitle>
             </DialogHeader>
-            <DialogDescription>
+            <DialogDescription className="text-gray-700 dark:text-gray-200 mt-2">
               Are you sure you want to make your biodata premium?
             </DialogDescription>
             <DialogFooter className="mt-6 flex justify-end gap-4">
               <Button
                 onClick={() => setOpen(false)}
                 variant="outline"
-                className="border-[#D33454] text-[#D33454] cursor-pointer hover:bg-[#fdf1f2]"
+                className="border-[#D33454] dark:border-[#FF5C7A] text-[#D33454] dark:text-[#FF5C7A] cursor-pointer hover:bg-[#fdf1f2] dark:hover:bg-[#2A2A2A]"
               >
                 Cancel
               </Button>
               <Button
-                className="bg-[#D33454] text-white hover:bg-[#b72b48] cursor-pointer"
+                className="bg-[#D33454] dark:bg-[#FF5C7A] text-white hover:bg-[#b72b48] dark:hover:bg-[#FF3F70] cursor-pointer"
                 onClick={handleReqPremium}
               >
                 Yes, Make Premium

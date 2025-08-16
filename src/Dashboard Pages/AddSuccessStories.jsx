@@ -30,7 +30,10 @@ const AddSuccessStories = () => {
     data.imageFile = imageURL;
     data.rating = rating;
     axios
-      .post("https://b11a12-server-side-akib-dev1.vercel.app/biodata/success-stories", data)
+      .post(
+        "https://b11a12-server-side-akib-dev1.vercel.app/biodata/success-stories",
+        data
+      )
       .then((res) => {
         if (res.data.insertedId) {
           Swal.fire({
@@ -49,9 +52,9 @@ const AddSuccessStories = () => {
     );
 
   return (
-    <section className="min-h-screen bg-[#FFF3F5] py-4 md:py-12">
-      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white shadow-lg rounded-xl p-10 border border-gray-200">
-        <h2 className="text-4xl font-bold text-[#D33454] mb-6 text-center">
+    <section className="min-h-screen bg-[#FFF3F5] dark:bg-[#121212] py-4 md:py-12 transition-colors duration-500">
+      <div className="max-w-9/12 max-lg:max-w-10/12 max-md:max-w-11/12 mx-auto bg-white dark:bg-[#1F1F1F] shadow-lg rounded-xl p-10 border border-gray-200 dark:border-gray-700 transition-colors duration-500">
+        <h2 className="text-4xl font-bold text-[#D33454] dark:text-[#FF5C7A] mb-6 text-center">
           Share Your Success Story
         </h2>
 
@@ -61,46 +64,54 @@ const AddSuccessStories = () => {
         >
           {/* Male Biodata ID */}
           <div className="flex flex-col">
-            <Label className="text-[#D33454] mb-1">Male Biodata ID</Label>
+            <Label className="text-[#D33454] dark:text-[#FF5C7A] mb-1">
+              Male Biodata ID
+            </Label>
             <Input
               {...register("maleId", { required: true })}
               placeholder="E.g. B-101"
-              className="border border-gray-300"
+              className="border border-gray-300 dark:border-gray-600 focus:ring-[#D33454] dark:focus:ring-[#FF5C7A] focus:ring-1 transition-colors"
             />
             {renderError("maleId")}
           </div>
 
           {/* Female Biodata ID */}
           <div className="flex flex-col">
-            <Label className="text-[#D33454] mb-1">Female Biodata ID</Label>
+            <Label className="text-[#D33454] dark:text-[#FF5C7A] mb-1">
+              Female Biodata ID
+            </Label>
             <Input
               {...register("femaleId", { required: true })}
               placeholder="E.g. B-202"
-              className="border border-gray-300"
+              className="border border-gray-300 dark:border-gray-600 focus:ring-[#D33454] dark:focus:ring-[#FF5C7A] focus:ring-1 transition-colors"
             />
             {renderError("femaleId")}
           </div>
 
-          {/* ✅ Marriage Date */}
+          {/* Marriage Date */}
           <div className="flex flex-col">
-            <Label className="text-[#D33454] mb-1">Marriage Date</Label>
+            <Label className="text-[#D33454] dark:text-[#FF5C7A] mb-1">
+              Marriage Date
+            </Label>
             <Input
               type="date"
               {...register("marriageDate", { required: true })}
-              className="border border-gray-300"
+              className="border border-gray-300 dark:border-gray-600 focus:ring-[#D33454] dark:focus:ring-[#FF5C7A] focus:ring-1 transition-colors"
             />
             {renderError("marriageDate")}
           </div>
 
           {/* Image Upload */}
           <div className="flex flex-col md:col-span-2">
-            <Label className="text-[#D33454] mb-1">Couple Image</Label>
+            <Label className="text-[#D33454] dark:text-[#FF5C7A] mb-1">
+              Couple Image
+            </Label>
             <label
               htmlFor="imageFile"
-              className="flex flex-col items-center justify-center gap-2 px-6 py-10 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer text-gray-500 hover:border-[#D33454] hover:bg-pink-50 transition"
+              className="flex flex-col items-center justify-center gap-2 px-6 py-10 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer text-gray-500 dark:text-gray-400 hover:border-[#D33454] dark:hover:border-[#FF5C7A] hover:bg-pink-50 dark:hover:bg-[#2A2A2A] transition"
             >
               <svg
-                className="w-10 h-10 text-[#D33454]"
+                className="w-10 h-10 text-[#D33454] dark:text-[#FF5C7A]"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.5"
@@ -126,11 +137,13 @@ const AddSuccessStories = () => {
 
           {/* Review */}
           <div className="flex flex-col md:col-span-2">
-            <Label className="text-[#D33454] mb-1">Your Review</Label>
+            <Label className="text-[#D33454] dark:text-[#FF5C7A] mb-1">
+              Your Review
+            </Label>
             <Textarea
               {...register("review", { required: true })}
               placeholder="How was your experience using Ghotok BD?"
-              className="border border-gray-300"
+              className="border border-gray-300 dark:border-gray-600 focus:ring-[#D33454] dark:focus:ring-[#FF5C7A] focus:ring-1 transition-colors"
               rows={5}
             />
             {renderError("review")}
@@ -149,7 +162,7 @@ const AddSuccessStories = () => {
           <div className="md:col-span-2 text-right">
             <Button
               type="submit"
-              className="bg-[#D33454] hover:bg-[#b72b48] text-white max-lg:w-full text-lg px-6 py-3 rounded-md cursor-pointer duration-200"
+              className="bg-[#D33454] dark:bg-[#FF5C7A] hover:bg-[#b72b48] dark:hover:bg-[#FF7A92] text-white max-lg:w-full text-lg px-6 py-3 rounded-md cursor-pointer duration-200 transition-colors"
             >
               Submit Success Story
             </Button>
