@@ -29,7 +29,9 @@ const Home = () => {
       <section>
         <WhyPremium />
       </section>
-      
+      <section>
+        <Safety />
+      </section>
     </main>
   );
 };
