@@ -32,6 +32,7 @@ import Checkout from "./Pages/Checkout";
 import SuccessStories from "./Dashboard Pages/SuccessStories";
 import AddSuccessStories from "./Dashboard Pages/AddSuccessStories";
 import Overview from "./Dashboard Pages/Overview";
+import Error from "./Components/ReUsable Components/Error";
 
 const queryClient = new QueryClient();
 
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
             <BioDataDetails />
           </PrivateRoute>
         ),
+        errorElement: <Error />,
       },
       {
         path: "/biodatas/checkout/:id",
